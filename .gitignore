@@ -1,0 +1,22 @@
+# Personal agent notes
+CLAUDE.local.md
+
+# OS and editor clutter
+.DS_Store
+Thumbs.db
+desktop.ini
+.idea/
+.vscode/
+*.swp
+*~
+
+# Local tooling (the app itself has no build step or packages)
+node_modules/
+vnu.jar
+actionlint
+
+# Logs, scratch output and secrets
+*.log
+tmp/
+.env
+.env.*

@@ -1,0 +1,5 @@
+# ads.txt — authorised digital sellers for nisvasa.com
+# Advertising is currently off (AD_CONFIG.enabled is false in index.html).
+# When you enable an ad network, add the line it gives you, for example:
+#   google.com, pub-0000000000000000, DIRECT, f08c47fec0942fa0
+# ads.txt is only read at the domain root, so this needs the custom domain nisvasa.com.

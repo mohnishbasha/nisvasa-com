@@ -1,0 +1,44 @@
+# nisvasa
+
+> nisvasa (Sanskrit niśvāsa, "breath") is a free guided-breathing web app at https://nisvasa.com/. It offers eight techniques with an animated breath circle, phase countdowns and sound synthesised in the browser. It has no accounts, cookies, tracking or install, and it is published by Serverless Ventures LLC (https://www.serverlessvc.com).
+
+Facts an agent can rely on:
+
+- Cost: free. No sign-up.
+- Platform: any modern web browser, desktop or mobile. The whole app is one HTML page.
+- Data: nothing about a practice session leaves the device. Ads are off by default; the privacy statement in the page footer describes the current state.
+- Sessions: 3, 5 or 10 minutes, or a custom length of 1–60 minutes. Wim Hof always runs as 3 rounds (about 8 minutes).
+- Mood light: a bulb button re-tints the page in one of six moods (Fresh, Dawn, Ocean, Dusk, Forest, Midnight). The choice lasts for the current visit.
+- Safety: this is wellness guidance, not medical advice. Wim Hof breathing and Kapalabhati are vigorous; practise seated or lying down, never in water or while driving, and skip them if pregnant or with a heart condition.
+
+## Exercises (each has a direct link)
+
+- [Box Breathing — Sama Vritti](https://nisvasa.com/#box): Focus & Calm. Inhale 4s, hold 4s, exhale 4s, hold 4s.
+- [4-7-8 Breathing — Pranayama](https://nisvasa.com/#four-seven-eight): Sleep & Relaxation. Inhale 4s, hold 7s, exhale 8s.
+- [Alternate Nostril Breathing — Nadi Shodhana](https://nisvasa.com/#nadi-shodhana): Balance & Clarity. Inhale 4s, hold 2s, exhale 4s, hold 2s, switching nostrils each cycle. Includes a hand-position guide.
+- [Bhramari — Humming Bee Breath](https://nisvasa.com/#bhramari): Stress Relief. Inhale 4s, hold 2s, hum on a 6s exhale. Includes a finger-placement guide.
+- [Wim Hof Breathing](https://nisvasa.com/#wim-hof): Energy & Vitality. 30 deep breaths, 60s retention on empty lungs, 15s recovery hold; 3 rounds. Shows a safety confirmation first.
+- [Coherent Breathing — Resonance Breathing](https://nisvasa.com/#coherent): Heart Rate Variability. Inhale 5.5s, exhale 5.5s (about 5 breaths per minute).
+- [Kapalabhati — Skull Shining Breath](https://nisvasa.com/#kapalabhati): Energise & Detox. Deep inhale, 30 sharp 0.5s pumps, 30s rest.
+- [Physiological Sigh — Double Inhale](https://nisvasa.com/#physiological-sigh): Instant Calm. Inhale 2s, second sniff 1s, long exhale 6s.
+
+## How to use
+
+1. Open https://nisvasa.com/ (or a direct exercise link above).
+2. Choose an exercise, read its benefits and pattern, and pick a session length.
+3. Select "begin practice" and follow the circle: it grows on the inhale, holds, and shrinks on the exhale.
+4. Pause, resume, stop, mute, change the volume or the mood light with the controls below the circle. The space bar also pauses.
+
+## Legal
+
+- Privacy statement and terms of use: open the links in the page footer.
+- © Serverless Ventures LLC — https://www.serverlessvc.com
+
+## More detail
+
+- [llms-full.txt](https://nisvasa.com/llms-full.txt): every exercise's benefits, pattern and completion message, plus safety, privacy and terms
+
+## For developers
+
+- [README](https://nisvasa.com/README.md): run, deploy and add exercises
+- [AGENTS.md](https://nisvasa.com/AGENTS.md): rules for coding agents working on the source

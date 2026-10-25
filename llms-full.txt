@@ -1,0 +1,149 @@
+# nisvasa — full reference
+
+> Complete, agent-readable content of https://nisvasa.com/, generated from the exercise data in index.html. For the short version see https://nisvasa.com/llms.txt.
+
+nisvasa (Sanskrit niśvāsa, "breath") is a free guided-breathing web app by Serverless Ventures LLC (https://www.serverlessvc.com). It runs entirely in the browser: no install, no account, no cookies, no tracking. Sound is synthesised on the device with the Web Audio API.
+
+## Using the app
+
+1. Open https://nisvasa.com/ or a direct exercise link (https://nisvasa.com/#<exercise-id>).
+2. Read the benefits and the pattern, then choose a session length: 3, 5 or 10 minutes, or a custom 1–60 minutes. Wim Hof always runs as 3 rounds.
+3. Select "Begin practice". The circle grows on the inhale, holds, and shrinks on the exhale; the number inside counts down each phase (or counts breaths and pumps).
+4. Controls: stop, pause/resume (space bar also works), mute, volume and the mood light.
+5. Sessions end at the end of a full cycle, then show a completion message.
+
+## Mood light
+
+The bulb button opens a palette of moods that re-tint the whole page. The choice lasts for the current visit only.
+
+- Fresh: Clear and awake — mint and sky
+- Dawn: Warm and gentle — for mornings
+- Ocean: Cool and steady — for focus
+- Dusk: Soft lavender — for unwinding
+- Forest: Grounded and low-lit
+- Midnight: Dim and deep — for sleep
+
+## Exercises
+
+### Box Breathing — Sama Vritti
+
+- Link: https://nisvasa.com/#box
+- Category: Focus & Calm
+- Pattern: inhale 4s → hold 4s → exhale 4s → hold 4s
+- In short: Four equal sides of breath. A steady square for the mind to rest inside.
+
+Benefits:
+- Regulates the nervous system and reduces stress by creating a symmetrical breathing rhythm.
+- Used by Navy SEALs and athletes to achieve mental clarity under pressure.
+- Balances the sympathetic and parasympathetic nervous system, leaving you alert yet calm.
+
+Completion message: "You found the square. Carry its stillness with you."
+
+### 4-7-8 Breathing — Pranayama
+
+- Link: https://nisvasa.com/#four-seven-eight
+- Category: Sleep & Relaxation
+- Pattern: inhale 4s → hold 7s → exhale 8s
+- In short: A long, slow exhale that loosens the day’s grip. Made for the edge of sleep.
+
+Benefits:
+- Activates the parasympathetic nervous system and naturally slows the heart rate.
+- Dr. Andrew Weil calls it a natural tranquilizer for the nervous system.
+- Particularly effective for easing anxiety and for falling asleep.
+
+Completion message: "Sleep comes to those who release. You have released."
+
+### Alternate Nostril Breathing — Nadi Shodhana
+
+- Link: https://nisvasa.com/#nadi-shodhana
+- Category: Balance & Clarity
+- Pattern: inhale 4s → hold 2s → exhale 4s → hold 2s
+- In short: Breath moves left, then right. Two rivers brought gently back into balance.
+
+Benefits:
+- Clears blocked energy channels and brings balance to the left and right hemispheres of the brain.
+- Reduces blood pressure and promotes mental clarity.
+- In yogic tradition, it purifies the nadis — the subtle body’s energy channels.
+
+Completion message: "Both rivers flow clear now."
+
+### Bhramari — Humming Bee Breath
+
+- Link: https://nisvasa.com/#bhramari
+- Category: Stress Relief
+- Pattern: inhale 4s → hold 2s → hum 6s
+- In short: A soft hum on the exhale. The sound turns inward, and the mind follows it.
+
+Benefits:
+- The vibration created by humming stimulates the vagus nerve and triggers an immediate calming response.
+- Reduces anxiety, anger, and insomnia.
+- Used in yoga therapy for high blood pressure and migraines.
+
+Completion message: "The hum fades. The quiet remains."
+
+### Wim Hof Breathing — Power Breathing
+
+- Link: https://nisvasa.com/#wim-hof
+- Category: Energy & Vitality
+- Pattern: 30 breaths 90s → retention 60s → recovery hold 15s (3 rounds)
+- In short: Thirty full breaths, a long empty hold, then stillness. Three rounds of fire.
+
+Benefits:
+- Alkalizes the blood and floods the body with oxygen, creating a natural high and a surge of energy.
+- Builds stress resilience and has been shown in studies to influence immune response.
+- Not recommended during pregnancy or with cardiovascular conditions. Always practice seated or lying down.
+
+Completion message: "You have breathed fire and returned to stillness."
+
+### Coherent Breathing — Resonance Breathing
+
+- Link: https://nisvasa.com/#coherent
+- Category: Heart Rate Variability
+- Pattern: inhale 5.5s → exhale 5.5s
+- In short: Five breaths a minute — the pace at which heart and lungs begin to move as one.
+
+Benefits:
+- Breathing at exactly five breaths per minute maximizes heart rate variability.
+- Brings the cardiovascular and respiratory systems into resonance.
+- Associated with reduced anxiety, improved mood, and better athletic performance.
+
+Completion message: "Your heart found its rhythm."
+
+### Kapalabhati — Skull Shining Breath
+
+- Link: https://nisvasa.com/#kapalabhati
+- Category: Energise & Detox
+- Pattern: deep inhale 3s → 30 pumps 30s → rest 30s
+- In short: Quick, sharp exhales from the belly. A bright, clearing fire for a foggy mind.
+
+Benefits:
+- Rapid diaphragmatic pumping cleanses the respiratory tract and energises the mind.
+- Stimulates the digestive organs and builds core heat.
+- Clears mental fog. It is a cleansing kriya rather than a pranayama.
+
+Completion message: "The skull shines. The mind is clear."
+
+### Physiological Sigh — Double Inhale
+
+- Link: https://nisvasa.com/#physiological-sigh
+- Category: Instant Calm
+- Pattern: inhale 2s → sniff 1s → long exhale 6s
+- In short: Two inhales, one long sigh out. The quickest way back to calm.
+
+Benefits:
+- Identified by Stanford researchers as the fastest way to reduce stress in real time.
+- The double inhale fully inflates deflated air sacs, maximising CO₂ offload on the long exhale.
+- Even one cycle has a measurable calming effect.
+
+Completion message: "One breath. That was enough."
+
+## Safety
+
+nisvasa offers general wellness guidance, not medical advice. Practise seated or lying down, never in or near water, while driving or while operating machinery. Stop if you feel dizzy, faint or unwell. Wim Hof breathing and Kapalabhati are vigorous: skip them if you are pregnant or have a heart, blood-pressure, respiratory or seizure condition, and talk to a health professional first if unsure.
+
+## Privacy and terms (summary)
+
+- Privacy: nisvasa collects nothing. No accounts, forms, analytics, cookies or browser storage. Advertising is off by default; if it is ever switched on, the privacy statement in the page footer describes it. The site is hosted on GitHub Pages, which may keep technical logs under GitHub's own privacy statement.
+- Terms: free for personal use, provided "as is" without warranty, not medical advice. Full text: open "Privacy" and "Terms of use" in the page footer.
+- © Serverless Ventures LLC — https://www.serverlessvc.com
+

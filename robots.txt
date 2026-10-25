@@ -1,0 +1,8 @@
+# nisvasa welcomes search engines and AI agents.
+# Content signals (https://contentsignals.org): search and AI answers may use this site;
+# training AI models on it is not permitted. Change ai-train to "yes" to allow it.
+User-agent: *
+Content-Signal: search=yes, ai-input=yes, ai-train=no
+Allow: /
+
+Sitemap: https://nisvasa.com/sitemap.xml

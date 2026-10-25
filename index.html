@@ -1,0 +1,2646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Free guided breathing exercises for calm, sleep, focus and energy. Box breathing, 4-7-8, alternate nostril, Wim Hof and more, right in your browser.">
+<title>nisvasa — guided breathing practice</title>
+<link rel="icon" href="data:,">
+<link rel="canonical" href="https://nisvasa.com/">
+<link rel="alternate" type="text/plain" href="llms.txt" title="LLM-readable summary">
+<link rel="alternate" type="text/plain" href="llms-full.txt" title="LLM-readable full reference">
+<link rel="sitemap" type="application/xml" href="sitemap.xml">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="nisvasa">
+<meta property="og:title" content="nisvasa — be still. breathe.">
+<meta property="og:description" content="Eight guided breathing techniques in one quiet page. No install, no account, no tracking.">
+<meta property="og:url" content="https://nisvasa.com/">
+<meta name="twitter:card" content="summary">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "nisvasa",
+  "alternateName": "breathe",
+  "url": "https://nisvasa.com/",
+  "description": "Free guided breathing exercises with animated visuals and synthesised sound. Runs entirely in the browser with no accounts, cookies or tracking.",
+  "applicationCategory": "HealthApplication",
+  "operatingSystem": "Any (web browser)",
+  "isAccessibleForFree": true,
+  "inLanguage": "en",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "featureList": [
+    "Box Breathing (Sama Vritti): inhale 4s, hold 4s, exhale 4s, hold 4s",
+    "4-7-8 Breathing: inhale 4s, hold 7s, exhale 8s",
+    "Alternate Nostril Breathing (Nadi Shodhana): inhale 4s, hold 2s, exhale 4s, hold 2s",
+    "Bhramari (Humming Bee Breath): inhale 4s, hold 2s, hum 6s",
+    "Wim Hof Breathing: 30 breaths, 60s retention, 15s recovery hold, 3 rounds",
+    "Coherent Breathing: inhale 5.5s, exhale 5.5s",
+    "Kapalabhati (Skull Shining Breath): 30 pumps of 0.5s, then rest",
+    "Physiological Sigh: inhale 2s, second sniff 1s, exhale 6s"
+  ],
+  "publisher": {
+    "@type": "Organization",
+    "name": "Serverless Ventures LLC",
+    "url": "https://www.serverlessvc.com"
+  }
+}
+</script>
+<style>
+  /*
+   * Design language follows serverlessvc.com: pastel light gradients, frosted-glass
+   * surfaces, light-weight sans headings and rounded pill buttons.
+   * "Moods" re-tint the whole room; every colour lives in these tokens.
+   */
+  :root {
+    /* Surfaces */
+    --bg-deep: #F5F8FC;
+    --bg-mid: #FFFFFF;
+    --bg-surface: #F1F5F9;
+    --glass: rgba(255, 255, 255, 0.65);
+    --glass-strong: rgba(255, 255, 255, 0.9);
+    --glass-border: rgba(255, 255, 255, 0.8);
+
+    /* Text */
+    --text-primary: #1F2937;
+    --text-primary-rgb: 31, 41, 55;
+    --text-secondary: #4B5563;
+    --text-muted: #6B7280;
+    --on-tech: #FFFFFF;
+
+    /* Lines, depth, overlays */
+    --divider: rgba(31, 41, 55, 0.08);
+    --shadow: rgba(15, 23, 42, 0.08);
+    --shadow-soft: rgba(15, 23, 42, 0.04);
+    --overlay: rgba(241, 245, 249, 0.72);
+    --shimmer: rgba(255, 255, 255, 0.55);
+
+    /* Mood — background gradient stops, drifting orbs and brand accent */
+    --grad-a: #E8F5F0;
+    --grad-b: #DCEEFB;
+    --grad-c: #F0F4FF;
+    --grad-d: #FAF0FB;
+    --orb-a: #85C9A8;
+    --orb-b: #A5B4FC;
+    --brand: #16A34A;
+
+    /* Technique palette — hex for solid use, rgb triplets for alpha blends */
+    --sage: #2D8F65;           --sage-rgb: 45, 143, 101;
+    --indigo-soft: #4F5BD5;    --indigo-soft-rgb: 79, 91, 213;
+    --gold-muted: #A8841F;     --gold-muted-rgb: 168, 132, 31;
+    --rose-muted: #D14D72;     --rose-muted-rgb: 209, 77, 114;
+    --terracotta: #E0603A;     --terracotta-rgb: 224, 96, 58;
+    --teal-soft: #0E8A94;      --teal-soft-rgb: 14, 138, 148;
+    --amber-soft: #D97706;     --amber-soft-rgb: 217, 119, 6;
+    --lavender-soft: #8B5CF6;  --lavender-soft-rgb: 139, 92, 246;
+
+    /* Mood swatches shown in the mood-light picker */
+    --swatch-fresh: linear-gradient(135deg, #B8E0CC, #DCEEFB 55%, #E9D5FF);
+    --swatch-dawn: linear-gradient(135deg, #FDBA74, #FBCFE8 55%, #FEF08A);
+    --swatch-ocean: linear-gradient(135deg, #67E8F9, #BAE6FD 55%, #C7D2FE);
+    --swatch-dusk: linear-gradient(135deg, #C4B5FD, #FBCFE8 55%, #E0E7FF);
+    --swatch-forest: linear-gradient(135deg, #0F2A22, #1E7350 55%, #4FAB82);
+    --swatch-midnight: linear-gradient(135deg, #0B1024, #312E81 55%, #7C3AED);
+
+    /* Type — system stack with Inter first when installed; nothing is downloaded */
+    --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+    /* Motion */
+    --ease: cubic-bezier(0.4, 0, 0.2, 1);
+    --ease-breath: cubic-bezier(0.45, 0.05, 0.55, 0.95);
+
+    /* Active technique, overridden per card and per session */
+    --tech: var(--sage);
+    --tech-rgb: var(--sage-rgb);
+
+    /* Circle cap keeps the breath circle inside narrow phones (≤600px base) */
+    --circle-cap: min(260px, 78vw);
+
+    color-scheme: light;
+  }
+
+  /* ── Moods ─────────────────────────────────────────── */
+
+  :root[data-mood="dawn"] {
+    --grad-a: #FFF1E6; --grad-b: #FFE4E1; --grad-c: #FDF2F8; --grad-d: #FEF9C3;
+    --orb-a: #FDBA74; --orb-b: #F9A8D4; --brand: #E0603A;
+  }
+
+  :root[data-mood="ocean"] {
+    --grad-a: #E0F2FE; --grad-b: #E0F7FA; --grad-c: #ECFEFF; --grad-d: #EEF2FF;
+    --orb-a: #67E8F9; --orb-b: #93C5FD; --brand: #0E8A94;
+  }
+
+  :root[data-mood="dusk"] {
+    --grad-a: #F3E8FF; --grad-b: #FCE7F3; --grad-c: #EDE9FE; --grad-d: #E0E7FF;
+    --orb-a: #C4B5FD; --orb-b: #F9A8D4; --brand: #8B5CF6;
+  }
+
+  /* Low-light moods share one dark surface set */
+  :root[data-mood="forest"], :root[data-mood="midnight"] {
+    --bg-deep: #0B1220;
+    --bg-mid: #111827;
+    --bg-surface: #1F2937;
+    --glass: rgba(17, 24, 39, 0.55);
+    --glass-strong: rgba(17, 24, 39, 0.88);
+    --glass-border: rgba(255, 255, 255, 0.08);
+    --text-primary: #E5E7EB;
+    --text-primary-rgb: 229, 231, 235;
+    --text-secondary: #A1A9B5;
+    --text-muted: #7D8694;
+    --on-tech: #0B1220;
+    --divider: rgba(229, 231, 235, 0.1);
+    --shadow: rgba(0, 0, 0, 0.35);
+    --shadow-soft: rgba(0, 0, 0, 0.2);
+    --overlay: rgba(8, 12, 22, 0.78);
+    --shimmer: rgba(255, 255, 255, 0.06);
+    --sage: #4FAB82;           --sage-rgb: 79, 171, 130;
+    --indigo-soft: #8B94F0;    --indigo-soft-rgb: 139, 148, 240;
+    --gold-muted: #D4B04F;     --gold-muted-rgb: 212, 176, 79;
+    --rose-muted: #EC7C9B;     --rose-muted-rgb: 236, 124, 155;
+    --terracotta: #F08A62;     --terracotta-rgb: 240, 138, 98;
+    --teal-soft: #3BB8C0;      --teal-soft-rgb: 59, 184, 192;
+    --amber-soft: #F5A524;     --amber-soft-rgb: 245, 165, 36;
+    --lavender-soft: #A78BFA;  --lavender-soft-rgb: 167, 139, 250;
+    color-scheme: dark;
+  }
+
+  :root[data-mood="forest"] {
+    --grad-a: #0C1F18; --grad-b: #0F2A22; --grad-c: #10241F; --grad-d: #0B1A1C;
+    --orb-a: #2D8F65; --orb-b: #1E7350; --brand: #4FAB82;
+  }
+
+  :root[data-mood="midnight"] {
+    --grad-a: #0B1024; --grad-b: #121A3A; --grad-c: #1A1640; --grad-d: #0D1226;
+    --orb-a: #4F46E5; --orb-b: #7C3AED; --brand: #8B94F0;
+  }
+
+  [data-tech="sage"] { --tech: var(--sage); --tech-rgb: var(--sage-rgb); }
+  [data-tech="indigo-soft"] { --tech: var(--indigo-soft); --tech-rgb: var(--indigo-soft-rgb); }
+  [data-tech="gold-muted"] { --tech: var(--gold-muted); --tech-rgb: var(--gold-muted-rgb); }
+  [data-tech="rose-muted"] { --tech: var(--rose-muted); --tech-rgb: var(--rose-muted-rgb); }
+  [data-tech="terracotta"] { --tech: var(--terracotta); --tech-rgb: var(--terracotta-rgb); }
+  [data-tech="teal-soft"] { --tech: var(--teal-soft); --tech-rgb: var(--teal-soft-rgb); }
+  [data-tech="amber-soft"] { --tech: var(--amber-soft); --tech-rgb: var(--amber-soft-rgb); }
+  [data-tech="lavender-soft"] { --tech: var(--lavender-soft); --tech-rgb: var(--lavender-soft-rgb); }
+
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html { -webkit-text-size-adjust: 100%; }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    background: var(--bg-deep);
+    color: var(--text-primary);
+    font-family: var(--font-sans);
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 1.8;
+    -webkit-font-smoothing: antialiased;
+    transition: background-color 600ms var(--ease), color 600ms var(--ease);
+  }
+
+  /* The light drifts slowly across the room, slow enough to be felt rather than seen */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -3;
+    pointer-events: none;
+    background: linear-gradient(135deg, var(--grad-a) 0%, var(--grad-b) 30%, var(--grad-c) 60%, var(--grad-d) 100%);
+    background-size: 400% 400%;
+    animation: bg-breathe 16s ease-in-out infinite;
+  }
+
+  @keyframes bg-breathe {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+
+  @keyframes orb-drift {
+    0%, 100% { transform: translate(0, 0); }
+    50% { transform: translate(24px, -18px); }
+  }
+
+  @keyframes view-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes float {
+    0% { transform: translateY(0); opacity: 0; }
+    12% { opacity: 0.18; }
+    88% { opacity: 0.18; }
+    100% { transform: translateY(-105vh); opacity: 0; }
+  }
+
+  .orbs {
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .orb {
+    position: absolute;
+    width: 420px;
+    height: 420px;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.35;
+    animation: orb-drift 18s ease-in-out infinite;
+    transition: background-color 600ms var(--ease);
+  }
+
+  .orb-a { top: -120px; left: -120px; background: var(--orb-a); }
+  .orb-b { right: -140px; bottom: -140px; background: var(--orb-b); animation-delay: -9s; }
+
+  h1, h2, h3, p { margin: 0; }
+
+  button, input { font: inherit; color: inherit; }
+
+  button { cursor: pointer; -webkit-tap-highlight-color: transparent; }
+
+  :focus-visible {
+    outline: 2px solid var(--tech);
+    outline-offset: 3px;
+  }
+
+  [tabindex="-1"]:focus { outline: none; }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  /* Frosted glass, the shared surface for cards, panels and dialogs */
+  .card, .guide, .modal-card, .ad-slot, .mood-panel {
+    border: 1px solid var(--glass-border);
+    background: var(--glass);
+    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(16px);
+    box-shadow: 0 1px 3px var(--shadow-soft);
+  }
+
+  /* ── Views ─────────────────────────────────────────── */
+
+  .view {
+    display: none;
+    opacity: 0;
+    transition: opacity 400ms ease;
+  }
+
+  /* display cannot transition, so the fade is carried by a keyframe on entry */
+  .view.active {
+    display: block;
+    opacity: 1;
+    animation: view-in 400ms var(--ease);
+  }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    align-self: flex-start;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.5;
+    color: var(--tech);
+    background: rgba(var(--tech-rgb), 0.1);
+  }
+
+  .badge::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--tech);
+  }
+
+  .section-label {
+    margin-bottom: 16px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  /* 48px hit area around a 40px visual circle */
+  .control {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: 48px;
+    height: 48px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: transparent;
+    color: var(--text-secondary);
+  }
+
+  .control::before {
+    content: '';
+    position: absolute;
+    inset: 4px;
+    border: 1px solid var(--glass-border);
+    border-radius: 50%;
+    background: var(--glass-strong);
+    box-shadow: 0 2px 8px var(--shadow);
+    transition: background 300ms var(--ease);
+  }
+
+  .control:hover::before { background: rgba(var(--tech-rgb), 0.16); }
+
+  .control[aria-expanded="true"] { color: var(--tech); }
+
+  .control svg {
+    position: relative;
+    width: 16px;
+    height: 16px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  /* SVG elements have no .hidden property, so icon swaps use a class instead */
+  .control .is-hidden { display: none; }
+
+  /* ── Mood light ────────────────────────────────────── */
+
+  .mood-nav {
+    position: absolute;
+    top: 12px;
+    right: 8px;
+  }
+
+  .mood-panel {
+    position: fixed;
+    top: 68px;
+    right: 16px;
+    z-index: 30;
+    width: min(300px, calc(100vw - 32px));
+    padding: 10px;
+    border-radius: 18px;
+    background: var(--glass-strong);
+    box-shadow: 0 20px 60px var(--shadow);
+    animation: view-in 300ms var(--ease);
+  }
+
+  .mood-panel[hidden] { display: none; }
+
+  .mood-title {
+    padding: 6px 10px 8px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  .mood-option {
+    display: grid;
+    grid-template-columns: 32px 1fr;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    min-height: 52px;
+    padding: 8px 10px;
+    border: 1px solid transparent;
+    border-radius: 12px;
+    background: transparent;
+    text-align: left;
+    transition: background 300ms var(--ease), border-color 300ms var(--ease);
+  }
+
+  .mood-option:hover { background: rgba(var(--text-primary-rgb), 0.05); }
+
+  .mood-option[aria-pressed="true"] {
+    border-color: var(--brand);
+    background: rgba(var(--text-primary-rgb), 0.04);
+  }
+
+  .mood-swatch {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    box-shadow: inset 0 0 0 1px var(--divider);
+  }
+
+  .mood-swatch[data-swatch="fresh"] { background: var(--swatch-fresh); }
+  .mood-swatch[data-swatch="dawn"] { background: var(--swatch-dawn); }
+  .mood-swatch[data-swatch="ocean"] { background: var(--swatch-ocean); }
+  .mood-swatch[data-swatch="dusk"] { background: var(--swatch-dusk); }
+  .mood-swatch[data-swatch="forest"] { background: var(--swatch-forest); }
+  .mood-swatch[data-swatch="midnight"] { background: var(--swatch-midnight); }
+
+  .mood-name {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.3;
+    color: var(--text-primary);
+  }
+
+  .mood-desc {
+    display: block;
+    font-size: 12px;
+    line-height: 1.4;
+    color: var(--text-muted);
+  }
+
+  /* ── Home ──────────────────────────────────────────── */
+
+  .horizon {
+    position: fixed;
+    top: 50vh;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    z-index: -1;
+    pointer-events: none;
+    background: var(--text-primary);
+    opacity: 0.05;
+  }
+
+  .home {
+    position: relative;
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 80px 16px 48px;
+  }
+
+  .masthead { text-align: center; }
+
+  .hero-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px;
+    border: 1px solid var(--glass-border);
+    border-radius: 999px;
+    background: var(--glass-strong);
+    box-shadow: 0 1px 3px var(--shadow-soft);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--brand);
+  }
+
+  .hero-pill::before {
+    content: '';
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--brand);
+  }
+
+  .app-name {
+    margin-top: 20px;
+    font-size: 44px;
+    font-weight: 300;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+  }
+
+  .app-subtitle {
+    margin-top: 12px;
+    font-size: 17px;
+    font-weight: 300;
+    line-height: 1.6;
+    color: var(--text-secondary);
+  }
+
+  .card-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+    margin-top: 56px;
+  }
+
+  .card {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 28px;
+    border-radius: 18px;
+    transition: transform 300ms ease, box-shadow 300ms ease;
+  }
+
+  .card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(135deg, transparent 40%, var(--shimmer) 50%, transparent 60%);
+    transform: translateX(-100%);
+    transition: transform 600ms var(--ease);
+  }
+
+  .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 60px var(--shadow);
+  }
+
+  .card:hover::after { transform: translateX(100%); }
+
+  .card-name {
+    margin-top: 14px;
+    font-size: 19px;
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+  }
+
+  .card-sanskrit {
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+
+  .card-teaser {
+    flex-grow: 1;
+    margin: 10px 0 22px;
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--text-secondary);
+  }
+
+  .card-begin {
+    width: 100%;
+    min-height: 48px;
+    border: 0;
+    border-radius: 999px;
+    background: rgba(var(--tech-rgb), 0.1);
+    color: var(--tech);
+    font-size: 14px;
+    font-weight: 500;
+    transition: background 300ms var(--ease), color 300ms var(--ease);
+  }
+
+  .card-begin:hover {
+    background: var(--tech);
+    color: var(--on-tech);
+  }
+
+  .footer {
+    margin-top: 72px;
+    text-align: center;
+    color: var(--text-muted);
+  }
+
+  .footer-motto {
+    font-size: 13px;
+    font-weight: 300;
+    letter-spacing: 0.02em;
+  }
+
+  .legal-links {
+    display: flex;
+    justify-content: center;
+    gap: 4px;
+    margin-top: 16px;
+  }
+
+  .legal-link {
+    min-height: 48px;
+    padding: 0 12px;
+    border: 0;
+    background: none;
+    font-size: 13px;
+    color: var(--text-muted);
+    transition: color 300ms var(--ease);
+  }
+
+  .legal-link:hover { color: var(--text-primary); }
+
+  .copyright { font-size: 12px; }
+
+  .copyright a {
+    display: inline-block;
+    padding: 12px 0;
+    color: inherit;
+    text-decoration: underline;
+    text-decoration-color: var(--divider);
+    text-underline-offset: 3px;
+    transition: color 300ms var(--ease);
+  }
+
+  .copyright a:hover { color: var(--text-primary); }
+
+  /* Space is reserved up front so a late-loading ad never shifts the page */
+  .ad-slot {
+    min-height: 140px;
+    margin-top: 48px;
+    padding: 16px 20px 20px;
+    border-radius: 18px;
+    text-align: center;
+  }
+
+  .ad-slot[hidden] { display: none; }
+
+  .ad-label {
+    margin-bottom: 10px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  /* ── Detail ────────────────────────────────────────── */
+
+  .detail {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 24px 16px 72px;
+  }
+
+  .back {
+    min-height: 48px;
+    padding: 0 4px;
+    border: 0;
+    background: none;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    transition: color 300ms var(--ease);
+  }
+
+  .back:hover { color: var(--text-primary); }
+
+  .detail-head { margin: 28px 0 40px; }
+
+  .detail-name {
+    margin-top: 16px;
+    font-size: 34px;
+    font-weight: 300;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+  }
+
+  .detail-sanskrit {
+    margin-top: 8px;
+    font-size: 17px;
+    font-weight: 500;
+    color: var(--tech);
+  }
+
+  .detail-block { margin-top: 44px; }
+
+  .benefit {
+    position: relative;
+    padding-left: 24px;
+    color: var(--text-secondary);
+  }
+
+  .benefit + .benefit { margin-top: 14px; }
+
+  .benefit::before {
+    content: '';
+    position: absolute;
+    top: 0.75em;
+    left: 2px;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--tech);
+  }
+
+  .pattern {
+    display: flex;
+    gap: 4px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  /* flex-grow per segment is written into #pattern-weights at render time */
+  .pattern-seg {
+    flex: 1 1 0;
+    min-width: 48px;
+  }
+
+  .pattern-bar {
+    display: block;
+    height: 10px;
+    background: rgba(var(--tech-rgb), 0.5);
+  }
+
+  .pattern-seg:first-child .pattern-bar { border-radius: 999px 0 0 999px; }
+  .pattern-seg:last-child .pattern-bar { border-radius: 0 999px 999px 0; }
+  .pattern-seg:only-child .pattern-bar { border-radius: 999px; }
+
+  .pattern-seg[data-phase="inhale"] .pattern-bar { background: rgba(var(--tech-rgb), 0.85); }
+  .pattern-seg[data-phase="hold"] .pattern-bar { background: rgba(var(--tech-rgb), 0.45); }
+  .pattern-seg[data-phase="exhale"] .pattern-bar { background: rgba(var(--tech-rgb), 0.65); }
+  .pattern-seg[data-phase="rest"] .pattern-bar { background: rgba(var(--tech-rgb), 0.25); }
+
+  .pattern-label {
+    display: block;
+    margin-top: 10px;
+    padding-right: 4px;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1.4;
+    color: var(--text-secondary);
+  }
+
+  .pattern-seconds {
+    display: block;
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--text-muted);
+  }
+
+  .pattern-summary {
+    margin-top: 16px;
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+
+  .guide {
+    margin: 44px 0 0;
+    padding: 24px;
+    border-radius: 18px;
+  }
+
+  .guide svg {
+    display: block;
+    width: 100%;
+    max-width: 260px;
+    height: auto;
+    margin: 0 auto 16px;
+  }
+
+  .guide figcaption, .guide p {
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--text-secondary);
+  }
+
+  .guide p + p { margin-top: 10px; }
+
+  .guide-line { fill: none; stroke: var(--text-secondary); stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; opacity: 0.7; }
+  .guide-soft { fill: none; stroke: var(--text-muted); stroke-width: 1; stroke-linecap: round; }
+  .guide-mark { fill: var(--tech); opacity: 0.9; }
+  .guide-text { fill: var(--text-muted); font-family: var(--font-sans); font-size: 9px; letter-spacing: 0.04em; }
+
+  .safety {
+    border-color: rgba(var(--tech-rgb), 0.35);
+    background: rgba(var(--tech-rgb), 0.07);
+  }
+
+  .safety-title {
+    margin-bottom: 10px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--tech);
+  }
+
+  .pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .pill {
+    min-width: 76px;
+    min-height: 48px;
+    padding: 0 20px;
+    border: 1px solid var(--glass-border);
+    border-radius: 999px;
+    background: var(--glass);
+    box-shadow: 0 1px 3px var(--shadow-soft);
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    transition: background 300ms var(--ease), color 300ms var(--ease);
+  }
+
+  .pill:hover { color: var(--text-primary); }
+
+  .pill[aria-pressed="true"] {
+    background: var(--tech);
+    color: var(--on-tech);
+  }
+
+  .custom-field {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 16px;
+    font-size: 14px;
+    color: var(--text-secondary);
+  }
+
+  .custom-field[hidden] { display: none; }
+
+  .custom-field input {
+    width: 96px;
+    min-height: 48px;
+    padding: 0 16px;
+    border: 1px solid var(--glass-border);
+    border-radius: 999px;
+    background: var(--glass-strong);
+    font-size: 15px;
+  }
+
+  .rounds-note { color: var(--text-secondary); }
+
+  .start {
+    width: 100%;
+    min-height: 52px;
+    margin-top: 48px;
+    border: 0;
+    border-radius: 999px;
+    background: var(--tech);
+    box-shadow: 0 10px 30px rgba(var(--tech-rgb), 0.3);
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--on-tech);
+    transition: box-shadow 300ms var(--ease), transform 300ms var(--ease);
+  }
+
+  .start:hover { box-shadow: 0 14px 36px rgba(var(--tech-rgb), 0.38); }
+
+  /* ── Overlays ──────────────────────────────────────── */
+
+  .modal, .completion {
+    position: fixed;
+    inset: 0;
+    z-index: 20;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 24px 16px;
+    background: var(--overlay);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    animation: view-in 400ms var(--ease);
+  }
+
+  .modal[hidden], .completion[hidden] { display: none; }
+
+  .modal-card {
+    width: 100%;
+    max-width: 440px;
+    padding: 28px;
+    border-radius: 20px;
+    background: var(--glass-strong);
+    box-shadow: 0 20px 60px var(--shadow);
+  }
+
+  .modal-card h2 {
+    margin-bottom: 14px;
+    font-size: 24px;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+  }
+
+  .modal-card p {
+    font-size: 14px;
+    color: var(--text-secondary);
+  }
+
+  .modal-card p + p { margin-top: 10px; }
+
+  .legal-card {
+    max-width: 560px;
+    max-height: calc(100dvh - 160px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  .legal-card h3 {
+    margin: 22px 0 6px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  .legal-card a { color: var(--brand); text-underline-offset: 3px; }
+
+  .legal-effective {
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+
+  .actions {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+    max-width: 440px;
+    margin-top: 24px;
+  }
+
+  .legal .actions { max-width: 560px; }
+
+  .btn {
+    min-height: 48px;
+    padding: 0 26px;
+    border-radius: 999px;
+    font-size: 14px;
+    font-weight: 500;
+    transition: background 300ms var(--ease), color 300ms var(--ease), box-shadow 300ms var(--ease);
+  }
+
+  .btn-primary {
+    border: 0;
+    background: var(--tech);
+    box-shadow: 0 10px 30px rgba(var(--tech-rgb), 0.3);
+    color: var(--on-tech);
+  }
+
+  .btn-primary:hover { box-shadow: 0 14px 36px rgba(var(--tech-rgb), 0.38); }
+
+  .btn-quiet {
+    border: 1px solid var(--glass-border);
+    background: var(--glass-strong);
+    box-shadow: 0 1px 3px var(--shadow-soft);
+    color: var(--text-primary);
+  }
+
+  .btn-quiet:hover { background: var(--bg-mid); }
+
+  .completion { text-align: center; }
+
+  .completion-kicker {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--tech);
+  }
+
+  .completion-stats {
+    margin-top: 14px;
+    font-size: 32px;
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    color: var(--text-primary);
+  }
+
+  .completion-message {
+    max-width: 420px;
+    margin-top: 16px;
+    font-size: 18px;
+    font-weight: 300;
+    line-height: 1.6;
+    color: var(--text-secondary);
+  }
+
+  /* ── Practice ──────────────────────────────────────── */
+
+  #view-practice { position: relative; }
+
+  /* The room takes on the technique's colour, barely */
+  #view-practice::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background: rgba(var(--tech-rgb), 0.06);
+  }
+
+  .progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 5;
+    width: 100%;
+    height: 3px;
+    border: 0;
+    -webkit-appearance: none;
+    appearance: none;
+    background: var(--divider);
+    color: var(--tech);
+  }
+
+  .progress::-webkit-progress-bar { background: var(--divider); }
+  .progress::-webkit-progress-value { background: var(--tech); transition: width 300ms linear; }
+  .progress::-moz-progress-bar { background: var(--tech); }
+
+  .particles {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .particle {
+    position: absolute;
+    bottom: -8px;
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: var(--tech);
+    opacity: 0;
+    animation: float 15s linear infinite;
+  }
+
+  .particle:nth-child(1) { left: 12%; animation-duration: 14s; animation-delay: 0s; }
+  .particle:nth-child(2) { left: 27%; width: 4px; height: 4px; animation-duration: 17s; animation-delay: -5s; }
+  .particle:nth-child(3) { left: 41%; animation-duration: 12s; animation-delay: -9s; }
+  .particle:nth-child(4) { left: 58%; width: 4px; height: 4px; animation-duration: 18s; animation-delay: -2s; }
+  .particle:nth-child(5) { left: 71%; animation-duration: 13s; animation-delay: -11s; }
+  .particle:nth-child(6) { left: 86%; animation-duration: 16s; animation-delay: -7s; }
+  .particle:nth-child(7) { left: 49%; width: 4px; height: 4px; animation-duration: 15s; animation-delay: -13s; }
+
+  .practice {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 28px;
+    min-height: 100vh;
+    min-height: 100dvh;
+    padding: 40px 16px 32px;
+    text-align: center;
+  }
+
+  /* What to do right now is the one thing on screen worth reading, so it reads first */
+  .practice-name {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 16px;
+    border-radius: 999px;
+    background: rgba(var(--tech-rgb), 0.12);
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    color: var(--tech);
+  }
+
+  .practice-name::before {
+    content: '';
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--tech);
+  }
+
+  .phase-label {
+    margin-top: 18px;
+    font-size: 42px;
+    font-weight: 500;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    text-transform: lowercase;
+    color: var(--text-primary);
+  }
+
+  .phase-hint {
+    min-height: 1.6em;
+    margin-top: 10px;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 1.6;
+    color: var(--text-primary);
+    opacity: 0.8;
+  }
+
+  .stage {
+    --circle-size: 160px;
+    --glow-opacity: 0.08;
+    --ring-opacity: 0.08;
+    --phase-duration: 0ms;
+    --circle-render: min(var(--circle-size), var(--circle-cap));
+    position: relative;
+    margin: 0;
+    width: calc(var(--circle-cap) * 1.16);
+    height: calc(var(--circle-cap) * 1.16);
+  }
+
+  .breath-circle, .ring {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .breath-circle {
+    width: var(--circle-render);
+    height: var(--circle-render);
+    border: 1.5px solid rgba(var(--tech-rgb), 0.6);
+    background: var(--glass);
+    box-shadow:
+      0 0 40px 8px rgba(var(--tech-rgb), var(--glow-opacity)),
+      inset 0 0 32px rgba(var(--tech-rgb), calc(var(--glow-opacity) * 0.5));
+    transition:
+      width var(--phase-duration) var(--ease-breath),
+      height var(--phase-duration) var(--ease-breath),
+      box-shadow var(--phase-duration) ease-in-out;
+  }
+
+  .ring {
+    border: 1px solid var(--tech);
+    transition:
+      width var(--phase-duration) var(--ease-breath),
+      height var(--phase-duration) var(--ease-breath),
+      opacity var(--phase-duration) ease-in-out;
+  }
+
+  .ring-inner {
+    width: calc(var(--circle-render) * 0.8);
+    height: calc(var(--circle-render) * 0.8);
+    opacity: var(--ring-opacity);
+  }
+
+  .ring-outer {
+    width: calc(var(--circle-render) * 1.1);
+    height: calc(var(--circle-render) * 1.1);
+    opacity: calc(var(--ring-opacity) / 3);
+  }
+
+  .countdown {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 44px;
+    font-weight: 300;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    font-variant-numeric: tabular-nums;
+    color: var(--tech);
+  }
+
+  .meta-time {
+    font-size: 13px;
+    font-variant-numeric: tabular-nums;
+    color: var(--text-muted);
+  }
+
+  .controls {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+  }
+
+  .volume {
+    display: flex;
+    align-items: center;
+    min-height: 48px;
+  }
+
+  .volume input {
+    width: 112px;
+    height: 48px;
+    margin: 0;
+    background: transparent;
+    accent-color: var(--tech);
+  }
+
+  /* ── Responsive (base styles above target ≤600px) ──── */
+
+  @media (min-width: 601px) {
+    :root { --circle-cap: 300px; }
+
+    .card-grid { grid-template-columns: 1fr 1fr; }
+
+    .app-name { font-size: 56px; }
+
+    .detail-name { font-size: 40px; }
+
+    .phase-label { font-size: 60px; }
+
+    .phase-hint { font-size: 21px; }
+
+    .practice-name { font-size: 16px; }
+
+    .countdown { font-size: 56px; }
+
+    .actions { flex-direction: row; justify-content: center; }
+
+    .actions .btn { flex: 1; }
+
+    .home { padding-top: 104px; }
+  }
+
+  @media (min-width: 1024px) {
+    .home { max-width: 760px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .breath-circle, .ring { transition: none; }
+    body::before, .orb, .view.active, .modal, .completion, .mood-panel { animation: none; }
+    .card, .card::after { transition: none; }
+    .card:hover { transform: none; }
+    .particles { display: none; }
+  }
+</style>
+<!-- Pattern bar weights are injected here so segment widths stay proportional without inline styles -->
+<style id="pattern-weights"></style>
+</head>
+<body>
+<div class="orbs" aria-hidden="true"><span class="orb orb-a"></span><span class="orb orb-b"></span></div>
+<main>
+
+  <!-- ── Library ───────────────────────────────────── -->
+  <section id="view-list" class="view active" aria-labelledby="app-name">
+    <span class="horizon" aria-hidden="true"></span>
+    <article class="home">
+      <nav class="mood-nav" aria-label="Mood light">
+        <button type="button" class="control" data-mood-toggle aria-label="Choose a mood light" aria-expanded="false" aria-controls="mood-panel">
+          <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6 12.5h4M6.5 14.5h3M8 1.5a4.5 4.5 0 0 0-2.6 8.2c.4.3.6.8.6 1.3v.5h4V11c0-.5.2-1 .6-1.3A4.5 4.5 0 0 0 8 1.5z"/></svg>
+        </button>
+      </nav>
+      <header class="masthead">
+        <p class="hero-pill">nisvasa · calm · sleep · focus · energy</p>
+        <h1 class="app-name" id="app-name" tabindex="-1" data-focus>breathe</h1>
+        <p class="app-subtitle">guided breathing practice</p>
+      </header>
+      <h2 class="sr-only" id="exercises-heading">Breathing exercises</h2>
+      <section class="card-grid" id="card-grid" aria-labelledby="exercises-heading"></section>
+      <aside class="ad-slot" id="ad-slot" aria-label="Advertisement" hidden>
+        <p class="ad-label">sponsor</p>
+      </aside>
+      <footer class="footer">
+        <p class="footer-motto">be still. breathe.</p>
+        <nav class="legal-links" aria-label="Legal">
+          <button type="button" class="legal-link" data-legal="legal-privacy" aria-label="Read the privacy statement">Privacy</button>
+          <button type="button" class="legal-link" data-legal="legal-terms" aria-label="Read the terms of use">Terms of use</button>
+        </nav>
+        <p class="copyright">
+          © <span id="copyright-year">2026</span>
+          <a href="https://www.serverlessvc.com" target="_blank" rel="noopener">Serverless Ventures LLC</a>. All rights reserved.
+        </p>
+      </footer>
+    </article>
+
+    <section class="modal legal" id="legal-privacy" role="dialog" aria-modal="true" aria-labelledby="privacy-title" hidden>
+      <article class="modal-card legal-card">
+        <h2 id="privacy-title">Privacy statement</h2>
+        <p class="legal-effective">Effective October 25, 2026</p>
+        <p>nisvasa (the &ldquo;Site&rdquo;) is operated by Serverless Ventures LLC (&ldquo;we&rdquo;, &ldquo;us&rdquo;). This statement explains what happens to your information when you use it.</p>
+        <h3>What we collect</h3>
+        <p data-ads="off">Nothing. The Site has no accounts, forms, analytics, advertising, cookies or tracking, and it does not save anything in your browser&rsquo;s storage.</p>
+        <p data-ads="on" hidden>We do not collect personal information ourselves. The Site has no accounts, forms or analytics. Advertising is shown on the library page only, as described below.</p>
+        <h3>How the Site works</h3>
+        <p>The whole app runs in your browser. Timers, animation and sound are generated on your device, and nothing about your practice is sent to us or anyone else.</p>
+        <h3 data-ads="on" hidden>Advertising</h3>
+        <p data-ads="on" hidden>The library page shows one advertisement from a third-party ad network. When it loads, that network may receive your IP address and browser details and, depending on the network and your choices, may use cookies or similar technology to measure and personalise ads. Its own privacy policy governs that data. Ads never appear during a practice session.</p>
+        <h3>Hosting</h3>
+        <p>The Site is served by GitHub Pages. To operate and secure that service, GitHub may log technical data such as IP addresses, as described in the <a href="https://docs.github.com/site-policy/privacy-policies/github-general-privacy-statement" target="_blank" rel="noopener">GitHub Privacy Statement</a>. We do not receive or control those logs.</p>
+        <h3>Children</h3>
+        <p>The Site is not directed at children under 13, and it collects no personal information from anyone.</p>
+        <h3>Changes</h3>
+        <p>If this statement changes, we will update this page and its effective date.</p>
+        <h3>Contact</h3>
+        <p>Questions can be sent through <a href="https://www.serverlessvc.com" target="_blank" rel="noopener">www.serverlessvc.com</a>.</p>
+      </article>
+      <nav class="actions" aria-label="Close privacy statement">
+        <button type="button" class="btn btn-quiet" data-close-legal aria-label="Close privacy statement">Close</button>
+      </nav>
+    </section>
+
+    <section class="modal legal" id="legal-terms" role="dialog" aria-modal="true" aria-labelledby="terms-title" hidden>
+      <article class="modal-card legal-card">
+        <h2 id="terms-title">Terms of use</h2>
+        <p class="legal-effective">Effective October 25, 2026</p>
+        <p>These terms govern your use of nisvasa (the &ldquo;Site&rdquo;), operated by Serverless Ventures LLC. By using the Site you agree to them.</p>
+        <h3>Not medical advice</h3>
+        <p>The Site offers general wellness information and guided breathing for relaxation. It is not medical advice, diagnosis or treatment. Talk to a qualified health professional before starting any breathing practice, especially if you are pregnant or have a heart, blood-pressure, respiratory or seizure condition.</p>
+        <h3>Practise safely</h3>
+        <p>Practise seated or lying down. Never practise in or near water, while driving, or while operating machinery. Stop at once if you feel dizzy, faint or unwell. Wim Hof breathing and Kapalabhati are vigorous and are not suitable for everyone.</p>
+        <h3>Using the Site</h3>
+        <p>The Site is free for personal use. Do not use it in any way that is unlawful or that disrupts the Site for others.</p>
+        <h3>Ownership</h3>
+        <p>The Site&rsquo;s design, text and code are &copy; Serverless Ventures LLC. All rights reserved, except where a separate licence says otherwise.</p>
+        <h3>No warranty</h3>
+        <p>The Site is provided &ldquo;as is&rdquo; and &ldquo;as available&rdquo;, without warranties of any kind, express or implied.</p>
+        <h3>Limitation of liability</h3>
+        <p>To the fullest extent permitted by law, Serverless Ventures LLC is not liable for any injury, loss or damage arising from your use of the Site.</p>
+        <h3>Links</h3>
+        <p>Links to other websites are provided for convenience. We are not responsible for their content or practices.</p>
+        <h3>Changes</h3>
+        <p>We may update these terms. Continuing to use the Site after an update means you accept the new terms.</p>
+        <h3>Contact</h3>
+        <p>Questions can be sent through <a href="https://www.serverlessvc.com" target="_blank" rel="noopener">www.serverlessvc.com</a>.</p>
+      </article>
+      <nav class="actions" aria-label="Close terms of use">
+        <button type="button" class="btn btn-quiet" data-close-legal aria-label="Close terms of use">Close</button>
+      </nav>
+    </section>
+  </section>
+
+  <!-- ── Detail ────────────────────────────────────── -->
+  <section id="view-detail" class="view" aria-labelledby="detail-name">
+    <article class="detail">
+      <nav aria-label="Back">
+        <button type="button" class="back" id="back-to-list" aria-label="Back to library">← Library</button>
+      </nav>
+
+      <header class="detail-head">
+        <span class="badge" id="detail-category"></span>
+        <h2 class="detail-name" id="detail-name" tabindex="-1" data-focus></h2>
+        <p class="detail-sanskrit" id="detail-sanskrit"></p>
+      </header>
+
+      <section aria-labelledby="benefits-label">
+        <h3 class="section-label" id="benefits-label">benefits</h3>
+        <div id="benefits"></div>
+      </section>
+
+      <section class="detail-block" aria-labelledby="pattern-label">
+        <h3 class="section-label" id="pattern-label">the pattern</h3>
+        <ol class="pattern" id="pattern"></ol>
+        <p class="pattern-summary" id="pattern-summary"></p>
+      </section>
+
+      <figure class="guide" id="guide-nadi" hidden>
+        <svg viewBox="0 0 220 170" role="img" aria-label="Hand position for alternate nostril breathing: right thumb closes the right nostril, ring finger closes the left nostril">
+          <ellipse class="guide-line" cx="110" cy="84" rx="50" ry="64"/>
+          <path class="guide-soft" d="M88 66 q8 -5 16 0 M116 66 q8 -5 16 0"/>
+          <path class="guide-line" d="M110 72 L102 104 Q110 110 118 104"/>
+          <path class="guide-soft" d="M98 128 q12 7 24 0"/>
+          <circle class="guide-mark" cx="100" cy="104" r="5.5"/>
+          <circle class="guide-mark" cx="120" cy="104" r="5.5"/>
+          <path class="guide-soft" d="M94 104 L40 120"/>
+          <path class="guide-soft" d="M126 104 L180 120"/>
+          <text class="guide-text" x="6" y="134">thumb</text>
+          <text class="guide-text" x="6" y="146">closes right</text>
+          <text class="guide-text" x="156" y="134">ring finger</text>
+          <text class="guide-text" x="156" y="146">closes left</text>
+        </svg>
+        <figcaption>
+          Right hand in Vishnu mudra: fold the index and middle fingers into the palm.
+          The thumb closes the right nostril, the ring finger the left.
+          Inhale left, exhale right — then inhale right, exhale left.
+        </figcaption>
+      </figure>
+
+      <figure class="guide" id="guide-bhramari" hidden>
+        <svg viewBox="0 0 260 170" role="img" aria-label="Finger placement for humming bee breath: thumbs on the ear flaps, index fingers above the brows, middle fingers resting on closed eyes">
+          <g transform="translate(20 0)">
+            <ellipse class="guide-line" cx="110" cy="86" rx="48" ry="62"/>
+            <path class="guide-line" d="M62 78 q-12 8 0 26 M158 78 q12 8 0 26"/>
+            <path class="guide-soft" d="M86 64 q10 -6 20 0 M114 64 q10 -6 20 0"/>
+            <path class="guide-line" d="M88 80 q8 5 16 0 M116 80 q8 5 16 0"/>
+            <path class="guide-soft" d="M110 88 L104 108 Q110 112 116 108"/>
+            <path class="guide-soft" d="M100 128 q10 4 20 0"/>
+            <circle class="guide-mark" cx="58" cy="91" r="5"/>
+            <circle class="guide-mark" cx="162" cy="91" r="5"/>
+            <circle class="guide-mark" cx="96" cy="58" r="3.5"/>
+            <circle class="guide-mark" cx="124" cy="58" r="3.5"/>
+            <circle class="guide-mark" cx="96" cy="80" r="3.5"/>
+            <circle class="guide-mark" cx="124" cy="80" r="3.5"/>
+          </g>
+          <path class="guide-soft" d="M72 93 L44 114 M188 93 L216 114 M148 56 L200 40 M112 80 L70 58"/>
+          <text class="guide-text" x="4" y="128">thumbs</text>
+          <text class="guide-text" x="4" y="140">on ear flaps</text>
+          <text class="guide-text" x="256" y="128" text-anchor="end">thumbs</text>
+          <text class="guide-text" x="256" y="140" text-anchor="end">on ear flaps</text>
+          <text class="guide-text" x="256" y="34" text-anchor="end">index above brows</text>
+          <text class="guide-text" x="4" y="52">middle on eyelids</text>
+        </svg>
+        <figcaption>
+          Shanmukhi mudra: thumbs gently fold the ear flaps closed, index fingers rest
+          above the brows, middle fingers lie lightly on closed eyes. With lips closed,
+          hum softly through the whole exhale.
+        </figcaption>
+      </figure>
+
+      <aside class="guide safety" id="guide-safety" hidden aria-labelledby="safety-card-title">
+        <h3 class="safety-title" id="safety-card-title">before you begin</h3>
+        <p>Practice seated or lying down — never in water, while driving, or standing.</p>
+        <p>Not recommended during pregnancy, or with cardiovascular conditions, high blood pressure or epilepsy.</p>
+        <p>Tingling and light-headedness are normal. If you feel unwell, stop and breathe naturally.</p>
+      </aside>
+
+      <section class="detail-block" id="session-select" aria-labelledby="session-label">
+        <h3 class="section-label" id="session-label">session length</h3>
+        <div class="pills" role="group" aria-labelledby="session-label">
+          <button type="button" class="pill" data-minutes="3" aria-pressed="false" aria-label="3 minutes">3 min</button>
+          <button type="button" class="pill" data-minutes="5" aria-pressed="true" aria-label="5 minutes">5 min</button>
+          <button type="button" class="pill" data-minutes="10" aria-pressed="false" aria-label="10 minutes">10 min</button>
+          <button type="button" class="pill" data-minutes="custom" aria-pressed="false" aria-label="Custom length">custom</button>
+        </div>
+        <p class="custom-field" id="custom-field" hidden>
+          <label for="custom-minutes">minutes</label>
+          <input type="number" id="custom-minutes" min="1" max="60" step="1" value="15" inputmode="numeric">
+        </p>
+      </section>
+
+      <section class="detail-block" id="rounds-select" aria-labelledby="rounds-label" hidden>
+        <h3 class="section-label" id="rounds-label">session length</h3>
+        <p class="rounds-note" id="rounds-note"></p>
+      </section>
+
+      <button type="button" class="start" id="start-practice" aria-label="Begin practice">Begin practice</button>
+    </article>
+
+    <section class="modal" id="safety-modal" role="dialog" aria-modal="true" aria-labelledby="safety-title" hidden>
+      <article class="modal-card">
+        <h2 id="safety-title">A moment of care</h2>
+        <p>Wim Hof breathing is powerful. Sit or lie somewhere safe, away from water and traffic.</p>
+        <p>Skip this practice if you are pregnant or have a heart or blood-pressure condition. Stop at any sign of discomfort.</p>
+      </article>
+      <nav class="actions" aria-label="Safety confirmation">
+        <button type="button" class="btn btn-quiet" id="safety-cancel" aria-label="Not now, return to details">Not now</button>
+        <button type="button" class="btn btn-primary" id="safety-confirm" aria-label="I understand, begin practice">I understand — begin</button>
+      </nav>
+    </section>
+  </section>
+
+  <!-- ── Practice ──────────────────────────────────── -->
+  <section id="view-practice" class="view" aria-labelledby="phase-label">
+    <progress class="progress" id="progress" max="1000" value="0" aria-label="Session progress"></progress>
+
+    <div class="particles" aria-hidden="true">
+      <span class="particle"></span><span class="particle"></span><span class="particle"></span>
+      <span class="particle"></span><span class="particle"></span><span class="particle"></span>
+      <span class="particle"></span>
+    </div>
+
+    <article class="practice">
+      <header>
+        <p class="practice-name" id="practice-name"></p>
+        <h2 class="phase-label" id="phase-label" tabindex="-1" data-focus>inhale</h2>
+        <p class="phase-hint" id="phase-hint"></p>
+      </header>
+
+      <figure class="stage" id="stage" aria-hidden="true">
+        <span class="ring ring-outer"></span>
+        <span class="ring ring-inner"></span>
+        <span class="breath-circle" id="circle"></span>
+        <span class="countdown" id="countdown"></span>
+      </figure>
+
+      <p class="meta-time" id="meta-time">0:00 / 0:00</p>
+
+      <nav class="controls" aria-label="Practice controls">
+        <button type="button" class="control" id="stop-btn" aria-label="Stop practice">
+          <svg viewBox="0 0 16 16" aria-hidden="true"><rect x="3.5" y="3.5" width="9" height="9" rx="1.5"/></svg>
+        </button>
+        <button type="button" class="control" id="pause-btn" aria-label="Pause">
+          <svg viewBox="0 0 16 16" aria-hidden="true" id="icon-pause"><path d="M5.5 3.5v9M10.5 3.5v9"/></svg>
+          <svg viewBox="0 0 16 16" aria-hidden="true" id="icon-play" class="is-hidden"><path d="M5 3.2l7.5 4.8L5 12.8z"/></svg>
+        </button>
+        <button type="button" class="control" id="sound-btn" aria-label="Mute sound" aria-pressed="false">
+          <svg viewBox="0 0 16 16" aria-hidden="true" id="icon-sound"><path d="M2.5 6h2.5l3.5-3v10L5 10H2.5z M11 5.5q1.8 2.5 0 5 M12.8 3.8q3.2 4.2 0 8.4"/></svg>
+          <svg viewBox="0 0 16 16" aria-hidden="true" id="icon-muted" class="is-hidden"><path d="M2.5 6h2.5l3.5-3v10L5 10H2.5z M11 6l3.5 4 M14.5 6L11 10"/></svg>
+        </button>
+        <button type="button" class="control" data-mood-toggle aria-label="Choose a mood light" aria-expanded="false" aria-controls="mood-panel">
+          <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6 12.5h4M6.5 14.5h3M8 1.5a4.5 4.5 0 0 0-2.6 8.2c.4.3.6.8.6 1.3v.5h4V11c0-.5.2-1 .6-1.3A4.5 4.5 0 0 0 8 1.5z"/></svg>
+        </button>
+        <label class="volume">
+          <span class="sr-only">Volume</span>
+          <input type="range" id="volume" min="0" max="100" step="1" value="55" aria-label="Volume">
+        </label>
+      </nav>
+    </article>
+
+    <section class="completion" id="completion" role="dialog" aria-modal="true" aria-labelledby="completion-kicker" hidden>
+      <p class="completion-kicker" id="completion-kicker">practice complete</p>
+      <p class="completion-stats" id="completion-stats"></p>
+      <p class="completion-message" id="completion-message"></p>
+      <nav class="actions" aria-label="After practice">
+        <button type="button" class="btn btn-quiet" id="to-library" aria-label="Back to library">Back to library</button>
+        <button type="button" class="btn btn-primary" id="practice-again" aria-label="Practice again">Practice again</button>
+      </nav>
+    </section>
+  </section>
+
+  <section class="mood-panel" id="mood-panel" aria-labelledby="mood-title" hidden>
+    <h2 class="mood-title" id="mood-title">Mood light</h2>
+    <nav id="mood-options" aria-label="Moods"></nav>
+  </section>
+
+  <p class="sr-only" id="phase-announcer" aria-live="polite"></p>
+</main>
+
+<script>
+'use strict';
+
+/* ── Constants ─────────────────────────────────────── */
+
+const CIRCLE_MIN_SIZE = 160;
+const CIRCLE_MAX_SIZE = 280;
+const TIMER_INTERVAL_MS = 100;
+const DEFAULT_SESSION_DURATION = 300;
+const DEFAULT_VOLUME = 0.55;
+
+const MS_PER_SECOND = 1000;
+const SECONDS_PER_MINUTE = 60;
+const PERCENT = 100;
+const PROGRESS_MAX = 1000;
+const CUSTOM_MIN_MINUTES = 1;
+const CUSTOM_MAX_MINUTES = 60;
+const COMPLETION_SETTLE_MS = 1600;
+const VOLUME_SMOOTHING_S = 0.05;
+const SILENT_GAIN = 0.0001;
+const NOISE_BUFFER_S = 0.1;
+
+const WIM_HOF_BREATHS = 30;
+const WIM_HOF_BREATH_IN_S = 1.5;
+const WIM_HOF_BREATH_OUT_S = 1.5;
+const WIM_HOF_RETENTION_S = 60;
+const WIM_HOF_RECOVERY_S = 15;
+const WIM_HOF_RECOVERY_MOTION_S = 2;
+const WIM_HOF_ROUNDS = 3;
+
+const KAPALABHATI_PUMPS = 30;
+const KAPALABHATI_HALF_PUMP_S = 0.5;
+const KAPALABHATI_PREPARE_S = 3;
+const KAPALABHATI_REST_S = 30;
+
+/*
+ * Advertising is off by default, so the page makes no third-party requests.
+ * To turn it on, set enabled: true, choose a provider and fill in its IDs.
+ * The ad is shown on the library page only, never during practice.
+ */
+const AD_CONFIG = {
+  enabled: false,
+  provider: 'ethicalads',
+  ethicalads: { publisher: '', type: 'text' },
+  adsense: { client: '', slot: '' },
+};
+
+const AD_PROVIDERS = {
+  ethicalads: {
+    script: () => 'https://media.ethicalads.io/media/client/ethicalads.min.js',
+    unit: buildEthicalAdsUnit,
+  },
+  adsense: {
+    script: () => `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${AD_CONFIG.adsense.client}`,
+    unit: buildAdSenseUnit,
+  },
+};
+
+// Mood lights re-tint the room to suit the moment; each id matches a [data-mood] token set
+const MOODS = [
+  { id: 'fresh', name: 'Fresh', description: 'Clear and awake — mint and sky' },
+  { id: 'dawn', name: 'Dawn', description: 'Warm and gentle — for mornings' },
+  { id: 'ocean', name: 'Ocean', description: 'Cool and steady — for focus' },
+  { id: 'dusk', name: 'Dusk', description: 'Soft lavender — for unwinding' },
+  { id: 'forest', name: 'Forest', description: 'Grounded and low-lit' },
+  { id: 'midnight', name: 'Midnight', description: 'Dim and deep — for sleep' },
+];
+
+// Fraction of the min→max circle range each phase rests at, plus glow and ring opacity
+const PHASE_VISUALS = {
+  inhale: { size: 1, glow: 0.35, ring: 0.15 },
+  hold: { size: 1, glow: 0.25, ring: 0.15 },
+  exhale: { size: 0, glow: 0.15, ring: 0.1 },
+  rest: { size: 0, glow: 0.08, ring: 0.08 },
+};
+
+const TONES = {
+  inhale: { freq: 432, gain: 0.18, attack: 0.06, duration: 0.4, release: 0.3 },
+  hold: { freq: 324, gain: 0.1, attack: 0.2, maxRelease: 0.6 },
+  exhale: { freq: 360, gain: 0.15, attack: 0.08, duration: 0.9, release: 0.6 },
+  rest: { freq: 216, gain: 0.06, interval: 2.5, duration: 0.6, attack: 0.05, release: 0.45 },
+  chirp: { freq: 880, sweepTo: 1320, gain: 0.12, duration: 0.04, attack: 0.005, release: 0.03 },
+  noise: { gain: 0.08, duration: 0.025 },
+  hum: { partials: [[220, 0.6], [440, 0.3], [660, 0.1]], gain: 0.08, attack: 0.3, release: 0.8 },
+  chime: { freqs: [396, 528, 660], note: 0.4, gap: 0.1, gain: 0.16, attack: 0.02, release: 0.3 },
+};
+
+// Sounds that span a whole phase and should resume for the remainder after a pause
+const SUSTAINED_SOUNDS = ['hold', 'rest', 'hum'];
+
+/* ── Exercises ─────────────────────────────────────── */
+
+const EXERCISES = [
+  {
+    id: 'box',
+    name: 'Box Breathing',
+    sanskrit: 'Sama Vritti',
+    category: 'Focus & Calm',
+    color: 'sage',
+    teaser: 'Four equal sides of breath. A steady square for the mind to rest inside.',
+    benefits: [
+      'Regulates the nervous system and reduces stress by creating a symmetrical breathing rhythm.',
+      'Used by Navy SEALs and athletes to achieve mental clarity under pressure.',
+      'Balances the sympathetic and parasympathetic nervous system, leaving you alert yet calm.',
+    ],
+    pattern: [
+      { phase: 'inhale', duration: 4, label: 'inhale' },
+      { phase: 'hold', duration: 4, label: 'hold' },
+      { phase: 'exhale', duration: 4, label: 'exhale' },
+      { phase: 'rest', duration: 4, label: 'hold' },
+    ],
+    completion: 'You found the square. Carry its stillness with you.',
+  },
+  {
+    id: 'four-seven-eight',
+    name: '4-7-8 Breathing',
+    sanskrit: 'Pranayama',
+    category: 'Sleep & Relaxation',
+    color: 'indigo-soft',
+    teaser: 'A long, slow exhale that loosens the day’s grip. Made for the edge of sleep.',
+    benefits: [
+      'Activates the parasympathetic nervous system and naturally slows the heart rate.',
+      'Dr. Andrew Weil calls it a natural tranquilizer for the nervous system.',
+      'Particularly effective for easing anxiety and for falling asleep.',
+    ],
+    pattern: [
+      { phase: 'inhale', duration: 4, label: 'inhale' },
+      { phase: 'hold', duration: 7, label: 'hold' },
+      { phase: 'exhale', duration: 8, label: 'exhale' },
+    ],
+    completion: 'Sleep comes to those who release. You have released.',
+  },
+  {
+    id: 'nadi-shodhana',
+    name: 'Alternate Nostril Breathing',
+    sanskrit: 'Nadi Shodhana',
+    category: 'Balance & Clarity',
+    color: 'gold-muted',
+    teaser: 'Breath moves left, then right. Two rivers brought gently back into balance.',
+    benefits: [
+      'Clears blocked energy channels and brings balance to the left and right hemispheres of the brain.',
+      'Reduces blood pressure and promotes mental clarity.',
+      'In yogic tradition, it purifies the nadis — the subtle body’s energy channels.',
+    ],
+    pattern: [
+      { phase: 'inhale', duration: 4, label: 'inhale' },
+      { phase: 'hold', duration: 2, label: 'hold' },
+      { phase: 'exhale', duration: 4, label: 'exhale' },
+      { phase: 'rest', duration: 2, label: 'hold' },
+    ],
+    build: 'alternate',
+    guide: 'nadi',
+    completion: 'Both rivers flow clear now.',
+  },
+  {
+    id: 'bhramari',
+    name: 'Bhramari',
+    sanskrit: 'Humming Bee Breath',
+    category: 'Stress Relief',
+    color: 'rose-muted',
+    teaser: 'A soft hum on the exhale. The sound turns inward, and the mind follows it.',
+    benefits: [
+      'The vibration created by humming stimulates the vagus nerve and triggers an immediate calming response.',
+      'Reduces anxiety, anger, and insomnia.',
+      'Used in yoga therapy for high blood pressure and migraines.',
+    ],
+    pattern: [
+      { phase: 'inhale', duration: 4, label: 'inhale', hint: 'fingers resting in place' },
+      { phase: 'hold', duration: 2, label: 'hold' },
+      { phase: 'exhale', duration: 6, label: 'hum', hint: 'lips closed, hum like a bee', sound: 'hum' },
+    ],
+    guide: 'bhramari',
+    completion: 'The hum fades. The quiet remains.',
+  },
+  {
+    id: 'wim-hof',
+    name: 'Wim Hof Breathing',
+    sanskrit: 'Power Breathing',
+    category: 'Energy & Vitality',
+    color: 'terracotta',
+    teaser: 'Thirty full breaths, a long empty hold, then stillness. Three rounds of fire.',
+    benefits: [
+      'Alkalizes the blood and floods the body with oxygen, creating a natural high and a surge of energy.',
+      'Builds stress resilience and has been shown in studies to influence immune response.',
+      'Not recommended during pregnancy or with cardiovascular conditions. Always practice seated or lying down.',
+    ],
+    pattern: [
+      { phase: 'inhale', duration: WIM_HOF_BREATHS * (WIM_HOF_BREATH_IN_S + WIM_HOF_BREATH_OUT_S), label: '30 breaths' },
+      { phase: 'rest', duration: WIM_HOF_RETENTION_S, label: 'retention' },
+      { phase: 'hold', duration: WIM_HOF_RECOVERY_S, label: 'recovery hold' },
+    ],
+    build: 'wimhof',
+    rounds: WIM_HOF_ROUNDS,
+    guide: 'safety',
+    completion: 'You have breathed fire and returned to stillness.',
+  },
+  {
+    id: 'coherent',
+    name: 'Coherent Breathing',
+    sanskrit: 'Resonance Breathing',
+    category: 'Heart Rate Variability',
+    color: 'teal-soft',
+    teaser: 'Five breaths a minute — the pace at which heart and lungs begin to move as one.',
+    benefits: [
+      'Breathing at exactly five breaths per minute maximizes heart rate variability.',
+      'Brings the cardiovascular and respiratory systems into resonance.',
+      'Associated with reduced anxiety, improved mood, and better athletic performance.',
+    ],
+    pattern: [
+      { phase: 'inhale', duration: 5.5, label: 'inhale' },
+      { phase: 'exhale', duration: 5.5, label: 'exhale' },
+    ],
+    completion: 'Your heart found its rhythm.',
+  },
+  {
+    id: 'kapalabhati',
+    name: 'Kapalabhati',
+    sanskrit: 'Skull Shining Breath',
+    category: 'Energise & Detox',
+    color: 'amber-soft',
+    teaser: 'Quick, sharp exhales from the belly. A bright, clearing fire for a foggy mind.',
+    benefits: [
+      'Rapid diaphragmatic pumping cleanses the respiratory tract and energises the mind.',
+      'Stimulates the digestive organs and builds core heat.',
+      'Clears mental fog. It is a cleansing kriya rather than a pranayama.',
+    ],
+    pattern: [
+      { phase: 'inhale', duration: KAPALABHATI_PREPARE_S, label: 'deep inhale' },
+      { phase: 'exhale', duration: KAPALABHATI_PUMPS * KAPALABHATI_HALF_PUMP_S * 2, label: '30 pumps' },
+      { phase: 'rest', duration: KAPALABHATI_REST_S, label: 'rest' },
+    ],
+    build: 'kapalabhati',
+    completion: 'The skull shines. The mind is clear.',
+  },
+  {
+    id: 'physiological-sigh',
+    name: 'Physiological Sigh',
+    sanskrit: 'Double Inhale',
+    category: 'Instant Calm',
+    color: 'lavender-soft',
+    teaser: 'Two inhales, one long sigh out. The quickest way back to calm.',
+    benefits: [
+      'Identified by Stanford researchers as the fastest way to reduce stress in real time.',
+      'The double inhale fully inflates deflated air sacs, maximising CO₂ offload on the long exhale.',
+      'Even one cycle has a measurable calming effect.',
+    ],
+    pattern: [
+      { phase: 'inhale', duration: 2, label: 'inhale', size: 0.7, hint: 'through the nose' },
+      { phase: 'inhale', duration: 1, label: 'sniff', hint: 'one more short sip of air' },
+      { phase: 'exhale', duration: 6, label: 'long exhale', hint: 'slowly, through the mouth' },
+    ],
+    completion: 'One breath. That was enough.',
+  },
+];
+
+/* ── State ─────────────────────────────────────────── */
+
+const state = {
+  exercise: null,
+  duration: DEFAULT_SESSION_DURATION,
+  phase: null,
+  phaseIndex: 0,
+  cyclePhases: [],
+  cycle: 0,
+  totalElapsed: 0,
+  phaseElapsed: 0,
+  isPaused: false,
+  isMuted: false,
+  volume: DEFAULT_VOLUME,
+  intervalId: null,
+  phaseStartTime: 0,
+  sessionStartTime: 0,
+  pausedAt: 0,
+  audioCtx: null,
+  noiseBuffer: null,
+  activeNodes: [],
+  lastAnnounced: '',
+  legalOpener: null,
+  mood: 'fresh',
+  moodOpener: null,
+};
+
+const dom = {
+  views: document.querySelectorAll('.view'),
+  cardGrid: byId('card-grid'),
+  backToList: byId('back-to-list'),
+  detailCategory: byId('detail-category'),
+  detailName: byId('detail-name'),
+  detailSanskrit: byId('detail-sanskrit'),
+  benefits: byId('benefits'),
+  pattern: byId('pattern'),
+  patternWeights: byId('pattern-weights'),
+  patternSummary: byId('pattern-summary'),
+  guides: { nadi: byId('guide-nadi'), bhramari: byId('guide-bhramari'), safety: byId('guide-safety') },
+  sessionSelect: byId('session-select'),
+  roundsSelect: byId('rounds-select'),
+  roundsNote: byId('rounds-note'),
+  pills: document.querySelectorAll('.pill'),
+  customField: byId('custom-field'),
+  customInput: byId('custom-minutes'),
+  startBtn: byId('start-practice'),
+  safetyModal: byId('safety-modal'),
+  safetyConfirm: byId('safety-confirm'),
+  safetyCancel: byId('safety-cancel'),
+  progress: byId('progress'),
+  practiceName: byId('practice-name'),
+  phaseLabel: byId('phase-label'),
+  phaseHint: byId('phase-hint'),
+  stage: byId('stage'),
+  circle: byId('circle'),
+  countdown: byId('countdown'),
+  metaTime: byId('meta-time'),
+  stopBtn: byId('stop-btn'),
+  pauseBtn: byId('pause-btn'),
+  iconPause: byId('icon-pause'),
+  iconPlay: byId('icon-play'),
+  soundBtn: byId('sound-btn'),
+  iconSound: byId('icon-sound'),
+  iconMuted: byId('icon-muted'),
+  volume: byId('volume'),
+  completion: byId('completion'),
+  completionStats: byId('completion-stats'),
+  completionMessage: byId('completion-message'),
+  practiceAgain: byId('practice-again'),
+  toLibrary: byId('to-library'),
+  announcer: byId('phase-announcer'),
+  moodPanel: byId('mood-panel'),
+  moodOptions: byId('mood-options'),
+  moodToggles: document.querySelectorAll('[data-mood-toggle]'),
+  legalLinks: document.querySelectorAll('[data-legal]'),
+  legalDialogs: document.querySelectorAll('.legal'),
+  legalClose: document.querySelectorAll('[data-close-legal]'),
+  copyrightYear: byId('copyright-year'),
+  adSlot: byId('ad-slot'),
+  adNotices: document.querySelectorAll('[data-ads]'),
+};
+
+
+/* ── Helpers ───────────────────────────────────────── */
+
+function byId(id) {
+  return document.getElementById(id);
+}
+
+function el(tag, className, text) {
+  const node = document.createElement(tag);
+  if (className) node.className = className;
+  if (text !== undefined) node.textContent = text;
+  return node;
+}
+
+function formatTime(seconds) {
+  const whole = Math.max(0, Math.floor(seconds));
+  const minutes = Math.floor(whole / SECONDS_PER_MINUTE);
+  const rest = String(whole % SECONDS_PER_MINUTE).padStart(2, '0');
+  return `${minutes}:${rest}`;
+}
+
+function plural(count, word) {
+  return `${count} ${word}${count === 1 ? '' : 's'}`;
+}
+
+function clamp(value, min, max) {
+  return Math.min(max, Math.max(min, value));
+}
+
+/* ── Views ─────────────────────────────────────────── */
+
+function showView(id) {
+  dom.views.forEach((view) => view.classList.toggle('active', view.id === id));
+  window.scrollTo(0, 0);
+  const heading = document.querySelector(`#${id} [data-focus]`);
+  if (heading) heading.focus({ preventScroll: true });
+}
+
+function showLibrary() {
+  stopTimer();
+  dom.completion.hidden = true;
+  delete document.body.dataset.tech;
+  setHash('');
+  showView('view-list');
+}
+
+/* ── Deep links ────────────────────────────────────── */
+
+// Each exercise has a shareable address (#box, #wim-hof …) so people and agents can link straight to it
+function setHash(id) {
+  const url = id ? `#${id}` : window.location.pathname + window.location.search;
+  history.replaceState(null, '', url);
+}
+
+function openFromHash() {
+  const id = window.location.hash.slice(1);
+  if (EXERCISES.some((item) => item.id === id)) openDetail(id);
+}
+
+/* ── Legal ─────────────────────────────────────────── */
+
+function openLegal(button) {
+  state.legalOpener = button;
+  const dialog = byId(button.dataset.legal);
+  dialog.hidden = false;
+  dialog.querySelector('[data-close-legal]').focus();
+}
+
+function closeLegal() {
+  dom.legalDialogs.forEach((dialog) => {
+    dialog.hidden = true;
+  });
+  if (state.legalOpener) state.legalOpener.focus();
+  state.legalOpener = null;
+}
+
+function legalIsOpen() {
+  return [...dom.legalDialogs].some((dialog) => !dialog.hidden);
+}
+
+/* ── Library ───────────────────────────────────────── */
+
+function createCard(exercise) {
+  const card = el('article', 'card');
+  card.dataset.tech = exercise.color;
+  const button = el('button', 'card-begin', 'Begin');
+  button.type = 'button';
+  button.dataset.exercise = exercise.id;
+  button.setAttribute('aria-label', `Open ${exercise.name}`);
+  card.append(
+    el('span', 'badge', exercise.category),
+    el('h2', 'card-name', exercise.name),
+    el('p', 'card-sanskrit', exercise.sanskrit),
+    el('p', 'card-teaser', exercise.teaser),
+    button,
+  );
+  return card;
+}
+
+function renderCards() {
+  dom.cardGrid.replaceChildren(...EXERCISES.map(createCard));
+}
+
+/* ── Detail ────────────────────────────────────────── */
+
+function openDetail(id) {
+  const exercise = EXERCISES.find((item) => item.id === id);
+  if (!exercise) return;
+  state.exercise = exercise;
+  document.body.dataset.tech = exercise.color;
+  dom.detailCategory.textContent = exercise.category;
+  dom.detailName.textContent = exercise.name;
+  dom.detailSanskrit.textContent = exercise.sanskrit;
+  renderBenefits(exercise);
+  renderPattern(exercise);
+  renderGuide(exercise);
+  renderSession(exercise);
+  setHash(exercise.id);
+  showView('view-detail');
+}
+
+function renderBenefits(exercise) {
+  dom.benefits.replaceChildren(...exercise.benefits.map((text) => el('p', 'benefit', text)));
+}
+
+function formatSeconds(seconds) {
+  return seconds >= SECONDS_PER_MINUTE && seconds % SECONDS_PER_MINUTE === 0
+    ? `${seconds / SECONDS_PER_MINUTE} min`
+    : `${seconds}s`;
+}
+
+function createSegment(step) {
+  const segment = el('li', 'pattern-seg');
+  segment.dataset.phase = step.phase;
+  const label = el('span', 'pattern-label', step.label);
+  label.append(el('span', 'pattern-seconds', formatSeconds(step.duration)));
+  segment.append(el('span', 'pattern-bar'), label);
+  return segment;
+}
+
+function renderPattern(exercise) {
+  dom.pattern.replaceChildren(...exercise.pattern.map(createSegment));
+  dom.patternWeights.textContent = exercise.pattern
+    .map((step, i) => `.pattern-seg:nth-child(${i + 1}) { flex-grow: ${step.duration}; }`)
+    .join('\n');
+  dom.patternSummary.textContent = describeCycle(exercise);
+}
+
+function describeCycle(exercise) {
+  const seconds = cycleSeconds(exercise);
+  const unit = exercise.rounds ? 'one round' : 'one cycle';
+  return `${unit} · ${Math.round(seconds * 10) / 10} seconds`;
+}
+
+function renderGuide(exercise) {
+  Object.entries(dom.guides).forEach(([key, node]) => {
+    node.hidden = key !== exercise.guide;
+  });
+}
+
+function renderSession(exercise) {
+  const isRounds = Boolean(exercise.rounds);
+  dom.sessionSelect.hidden = isRounds;
+  dom.roundsSelect.hidden = !isRounds;
+  if (isRounds) {
+    const minutes = Math.round((exercise.rounds * cycleSeconds(exercise)) / SECONDS_PER_MINUTE);
+    dom.roundsNote.textContent = `${plural(exercise.rounds, 'round')} · about ${minutes} minutes`;
+  }
+}
+
+function selectPill(pill) {
+  dom.pills.forEach((item) => item.setAttribute('aria-pressed', String(item === pill)));
+  const isCustom = pill.dataset.minutes === 'custom';
+  dom.customField.hidden = !isCustom;
+  if (isCustom) dom.customInput.focus();
+}
+
+// Read from the pills every time, because round-based exercises overwrite state.duration
+function resolveDuration() {
+  const pressed = document.querySelector('.pill[aria-pressed="true"]');
+  if (pressed.dataset.minutes !== 'custom') {
+    state.duration = Number(pressed.dataset.minutes) * SECONDS_PER_MINUTE;
+    return;
+  }
+  const minutes = Math.round(Number(dom.customInput.value)) || CUSTOM_MIN_MINUTES;
+  const safe = clamp(minutes, CUSTOM_MIN_MINUTES, CUSTOM_MAX_MINUTES);
+  dom.customInput.value = String(safe);
+  state.duration = safe * SECONDS_PER_MINUTE;
+}
+
+function handleBegin() {
+  if (state.exercise.guide === 'safety') {
+    dom.safetyModal.hidden = false;
+    dom.safetyConfirm.focus();
+    return;
+  }
+  startPractice();
+}
+
+function closeSafety() {
+  dom.safetyModal.hidden = true;
+  dom.startBtn.focus();
+}
+
+/* ── Cycle building ────────────────────────────────── */
+
+function buildCycle(exercise, cycleIndex) {
+  if (exercise.build === 'wimhof') return buildWimHofRound(cycleIndex);
+  if (exercise.build === 'kapalabhati') return buildKapalabhatiRound();
+  if (exercise.build === 'alternate') return buildAlternateCycle(exercise, cycleIndex);
+  return exercise.pattern.map((step) => ({ ...step }));
+}
+
+// Classic Nadi Shodhana alternates which nostril leads on every cycle
+function buildAlternateCycle(exercise, cycleIndex) {
+  const [first, second] = cycleIndex % 2 === 0 ? ['left', 'right'] : ['right', 'left'];
+  const hints = {
+    inhale: `in through the ${first} nostril`,
+    hold: 'both nostrils gently closed',
+    exhale: `out through the ${second} nostril`,
+    rest: 'pause before switching',
+  };
+  return exercise.pattern.map((step) => ({ ...step, hint: hints[step.phase] }));
+}
+
+function buildWimHofRound(cycleIndex) {
+  const roundHint = `round ${cycleIndex + 1} of ${WIM_HOF_ROUNDS}`;
+  const phases = [];
+  for (let breath = 1; breath <= WIM_HOF_BREATHS; breath += 1) {
+    phases.push(
+      { phase: 'inhale', duration: WIM_HOF_BREATH_IN_S, label: 'breathe in', count: breath, hint: roundHint, sound: 'noise' },
+      { phase: 'exhale', duration: WIM_HOF_BREATH_OUT_S, label: 'let go', count: breath, hint: roundHint, sound: 'none' },
+    );
+  }
+  phases.push(
+    { phase: 'rest', duration: WIM_HOF_RETENTION_S, label: 'hold empty', hint: 'exhale and rest without breath' },
+    { phase: 'hold', duration: WIM_HOF_RECOVERY_S, label: 'recovery hold', hint: 'breathe in fully and hold', motion: WIM_HOF_RECOVERY_MOTION_S },
+  );
+  return phases;
+}
+
+// Each pump is a passive half-beat inhale and a sharp half-beat exhale
+function buildKapalabhatiRound() {
+  const phases = [{ phase: 'inhale', duration: KAPALABHATI_PREPARE_S, label: 'deep inhale', hint: 'fill the belly' }];
+  for (let pump = 1; pump <= KAPALABHATI_PUMPS; pump += 1) {
+    phases.push(
+      { phase: 'inhale', duration: KAPALABHATI_HALF_PUMP_S, label: 'pump', count: pump, size: 0.45, sound: 'none', hint: 'sharp exhales from the belly' },
+      { phase: 'exhale', duration: KAPALABHATI_HALF_PUMP_S, label: 'pump', count: pump, size: 0.12, glow: 0.35, sound: 'chirp', hint: 'sharp exhales from the belly' },
+    );
+  }
+  phases.push({ phase: 'rest', duration: KAPALABHATI_REST_S, label: 'rest', hint: 'breathe naturally' });
+  return phases;
+}
+
+function cycleSeconds(exercise) {
+  return buildCycle(exercise, 0).reduce((sum, step) => sum + step.duration, 0);
+}
+
+/* ── Practice session ──────────────────────────────── */
+
+function startPractice() {
+  dom.safetyModal.hidden = true;
+  dom.completion.hidden = true;
+  resolveDuration();
+  initAudio();
+  resetSession();
+  dom.practiceName.textContent = state.exercise.name;
+  showView('view-practice');
+  updateCircle(PHASE_VISUALS.rest, 0);
+  // Force a layout so the first inhale animates from the resting size, not from nothing
+  void dom.circle.offsetWidth;
+  presentPhase(0, false);
+  updateReadout(performance.now());
+  startTimer();
+}
+
+function resetSession() {
+  const now = performance.now();
+  const exercise = state.exercise;
+  state.cycle = 0;
+  state.phaseIndex = 0;
+  state.cyclePhases = buildCycle(exercise, 0);
+  state.phase = state.cyclePhases[0];
+  state.sessionStartTime = now;
+  state.phaseStartTime = now;
+  state.totalElapsed = 0;
+  state.phaseElapsed = 0;
+  state.isPaused = false;
+  state.lastAnnounced = '';
+  if (exercise.rounds) state.duration = exercise.rounds * cycleSeconds(exercise);
+  updatePauseButton();
+}
+
+function startTimer() {
+  clearInterval(state.intervalId);
+  state.intervalId = setInterval(tick, TIMER_INTERVAL_MS);
+}
+
+function pauseTimer() {
+  if (state.isPaused) return;
+  state.isPaused = true;
+  state.pausedAt = performance.now();
+  clearInterval(state.intervalId);
+  state.intervalId = null;
+  stopActiveNodes();
+  freezeCircle();
+  updatePauseButton();
+  announce('paused');
+}
+
+function resumeTimer() {
+  if (!state.isPaused) return;
+  const pausedFor = performance.now() - state.pausedAt;
+  state.sessionStartTime += pausedFor;
+  state.phaseStartTime += pausedFor;
+  state.isPaused = false;
+  presentPhase((performance.now() - state.phaseStartTime) / MS_PER_SECOND, true);
+  updatePauseButton();
+  startTimer();
+}
+
+function stopTimer() {
+  clearInterval(state.intervalId);
+  state.intervalId = null;
+  state.isPaused = false;
+  stopActiveNodes();
+}
+
+function togglePause() {
+  if (state.isPaused) resumeTimer();
+  else pauseTimer();
+}
+
+function endPractice() {
+  stopTimer();
+  showView('view-detail');
+}
+
+// Time comes from performance.now(); the interval only refreshes the display, so it cannot drift
+function tick() {
+  const now = performance.now();
+  let advanced = false;
+  while ((now - state.phaseStartTime) / MS_PER_SECOND >= state.phase.duration) {
+    state.phaseStartTime += state.phase.duration * MS_PER_SECOND;
+    if (!advancePhase()) return;
+    advanced = true;
+  }
+  if (advanced) presentPhase((now - state.phaseStartTime) / MS_PER_SECOND, false);
+  updateReadout(now);
+}
+
+function advancePhase() {
+  state.phaseIndex += 1;
+  if (state.phaseIndex >= state.cyclePhases.length) {
+    state.cycle += 1;
+    if (sessionIsDone()) {
+      completeSession();
+      return false;
+    }
+    state.cyclePhases = buildCycle(state.exercise, state.cycle);
+    state.phaseIndex = 0;
+  }
+  state.phase = state.cyclePhases[state.phaseIndex];
+  return true;
+}
+
+// Sessions end on a cycle boundary so the practice never stops mid-breath
+function sessionIsDone() {
+  if (state.exercise.rounds) return state.cycle >= state.exercise.rounds;
+  const elapsed = (state.phaseStartTime - state.sessionStartTime) / MS_PER_SECOND;
+  return elapsed >= state.duration;
+}
+
+function presentPhase(elapsed, isResume) {
+  const phase = state.phase;
+  const motion = Math.max(0, (phase.motion ?? phase.duration) - elapsed);
+  updateCircle(resolveVisual(phase), motion * MS_PER_SECOND);
+  playPhaseSound(phase, phase.duration - elapsed, isResume);
+  dom.phaseLabel.textContent = phase.label;
+  dom.phaseHint.textContent = phase.hint || '';
+  if (!isResume) announcePhase(phase);
+}
+
+function resolveVisual(phase) {
+  const base = PHASE_VISUALS[phase.phase];
+  return {
+    size: phase.size ?? base.size,
+    glow: phase.glow ?? base.glow,
+    ring: base.ring,
+  };
+}
+
+function updateReadout(now) {
+  state.phaseElapsed = (now - state.phaseStartTime) / MS_PER_SECOND;
+  state.totalElapsed = (now - state.sessionStartTime) / MS_PER_SECOND;
+  const remaining = Math.ceil(state.phase.duration - state.phaseElapsed);
+  dom.countdown.textContent = String(state.phase.count ?? Math.max(1, remaining));
+  const shown = Math.min(state.totalElapsed, state.duration);
+  dom.metaTime.textContent = `${formatTime(shown)} / ${formatTime(state.duration)}`;
+  dom.progress.value = Math.round((shown / state.duration) * PROGRESS_MAX);
+}
+
+function completeSession() {
+  stopTimer();
+  const total = (state.phaseStartTime - state.sessionStartTime) / MS_PER_SECOND;
+  const unit = state.exercise.rounds ? 'round' : 'cycle';
+  dom.progress.value = PROGRESS_MAX;
+  dom.metaTime.textContent = `${formatTime(total)} / ${formatTime(state.duration)}`;
+  dom.completionStats.textContent = `${formatTime(total)} · ${plural(state.cycle, unit)}`;
+  dom.completionMessage.textContent = state.exercise.completion;
+  updateCircle(PHASE_VISUALS.rest, COMPLETION_SETTLE_MS);
+  dom.completion.hidden = false;
+  playChime();
+  announce('practice complete');
+  dom.practiceAgain.focus();
+}
+
+/* ── Circle ────────────────────────────────────────── */
+
+// Only CSS custom properties are written; CSS owns the actual animation
+function updateCircle(visual, motionMs) {
+  const size = CIRCLE_MIN_SIZE + (CIRCLE_MAX_SIZE - CIRCLE_MIN_SIZE) * visual.size;
+  const stage = dom.stage.style;
+  stage.setProperty('--phase-duration', `${Math.round(motionMs)}ms`);
+  stage.setProperty('--circle-size', `${size}px`);
+  stage.setProperty('--glow-opacity', String(visual.glow));
+  stage.setProperty('--ring-opacity', String(visual.ring));
+}
+
+// Pin the circle at its mid-transition size so pausing holds the breath where it is
+function freezeCircle() {
+  const width = dom.circle.getBoundingClientRect().width;
+  const stage = dom.stage.style;
+  stage.setProperty('--phase-duration', '0ms');
+  stage.setProperty('--circle-size', `${width}px`);
+}
+
+/* ── Announcements ─────────────────────────────────── */
+
+function announce(text) {
+  state.lastAnnounced = text;
+  dom.announcer.textContent = text;
+}
+
+// Counted breaths change every second or faster, so only the first of a run is spoken
+function announcePhase(phase) {
+  if (phase.count > 1) return;
+  if (phase.label === state.lastAnnounced) return;
+  announce(phase.label);
+}
+
+/* ── Controls ──────────────────────────────────────── */
+
+function updatePauseButton() {
+  dom.pauseBtn.setAttribute('aria-label', state.isPaused ? 'Resume' : 'Pause');
+  dom.iconPause.classList.toggle('is-hidden', state.isPaused);
+  dom.iconPlay.classList.toggle('is-hidden', !state.isPaused);
+}
+
+function updateSoundButton() {
+  dom.soundBtn.setAttribute('aria-pressed', String(state.isMuted));
+  dom.soundBtn.setAttribute('aria-label', state.isMuted ? 'Unmute sound' : 'Mute sound');
+  dom.iconSound.classList.toggle('is-hidden', state.isMuted);
+  dom.iconMuted.classList.toggle('is-hidden', !state.isMuted);
+}
+
+/* ── Audio ─────────────────────────────────────────── */
+
+// Created once on the first user gesture, as browsers require, and reused for every phase
+function initAudio() {
+  if (state.audioCtx) {
+    if (!state.isMuted) state.audioCtx.resume();
+    return;
+  }
+  const AudioCtor = window.AudioContext || window.webkitAudioContext;
+  if (!AudioCtor) return;
+  const ctx = new AudioCtor();
+  ctx.masterGain = ctx.createGain();
+  ctx.masterGain.gain.value = state.volume;
+  ctx.masterGain.connect(ctx.destination);
+  state.audioCtx = ctx;
+  if (state.isMuted) ctx.suspend();
+}
+
+function audioReady() {
+  return Boolean(state.audioCtx) && !state.isMuted;
+}
+
+function trackNode(node) {
+  state.activeNodes.push(node);
+  node.onended = () => {
+    state.activeNodes = state.activeNodes.filter((item) => item !== node);
+  };
+}
+
+function stopActiveNodes() {
+  state.activeNodes.forEach((node) => {
+    try {
+      node.stop();
+    } catch (error) {
+      // A node that never started throws here; there is nothing left to silence
+    }
+  });
+  state.activeNodes = [];
+}
+
+function playTone(freq, duration, gain, options = {}) {
+  if (!audioReady()) return;
+  const ctx = state.audioCtx;
+  const start = ctx.currentTime + (options.delay || 0);
+  const attack = Math.min(options.attack ?? 0.02, duration / 2);
+  const release = Math.min(options.release ?? 0.2, duration - attack);
+  const osc = ctx.createOscillator();
+  const env = ctx.createGain();
+  osc.type = 'sine';
+  osc.frequency.setValueAtTime(freq, start);
+  if (options.sweepTo) osc.frequency.exponentialRampToValueAtTime(options.sweepTo, start + duration);
+  env.gain.setValueAtTime(0, start);
+  env.gain.linearRampToValueAtTime(gain, start + attack);
+  env.gain.setValueAtTime(gain, start + duration - release);
+  env.gain.linearRampToValueAtTime(0, start + duration);
+  osc.connect(env).connect(ctx.masterGain);
+  trackNode(osc);
+  osc.start(start);
+  osc.stop(start + duration + VOLUME_SMOOTHING_S);
+}
+
+function getNoiseBuffer() {
+  if (state.noiseBuffer) return state.noiseBuffer;
+  const ctx = state.audioCtx;
+  const buffer = ctx.createBuffer(1, Math.ceil(ctx.sampleRate * NOISE_BUFFER_S), ctx.sampleRate);
+  const data = buffer.getChannelData(0);
+  for (let i = 0; i < data.length; i += 1) data[i] = Math.random() * 2 - 1;
+  state.noiseBuffer = buffer;
+  return buffer;
+}
+
+function playNoise() {
+  if (!audioReady()) return;
+  const ctx = state.audioCtx;
+  const { gain, duration } = TONES.noise;
+  const now = ctx.currentTime;
+  const source = ctx.createBufferSource();
+  const env = ctx.createGain();
+  source.buffer = getNoiseBuffer();
+  env.gain.setValueAtTime(gain, now);
+  env.gain.exponentialRampToValueAtTime(SILENT_GAIN, now + duration);
+  source.connect(env).connect(ctx.masterGain);
+  trackNode(source);
+  source.start(now);
+  source.stop(now + duration);
+}
+
+function playRestPulses(seconds) {
+  const tone = TONES.rest;
+  for (let offset = 0; offset < seconds; offset += tone.interval) {
+    const length = Math.min(tone.duration, seconds - offset);
+    playTone(tone.freq, length, tone.gain, { delay: offset, attack: tone.attack, release: tone.release });
+  }
+}
+
+function playHum(seconds) {
+  const { partials, gain, attack, release } = TONES.hum;
+  partials.forEach(([freq, weight]) => playTone(freq, seconds, gain * weight, { attack, release }));
+}
+
+function playChime() {
+  const { freqs, note, gap, gain, attack, release } = TONES.chime;
+  freqs.forEach((freq, i) => playTone(freq, note, gain, { delay: i * (note + gap), attack, release }));
+}
+
+const SOUND_PLAYERS = {
+  inhale: () => playTone(TONES.inhale.freq, TONES.inhale.duration, TONES.inhale.gain, TONES.inhale),
+  hold: (seconds) => playTone(TONES.hold.freq, seconds, TONES.hold.gain, {
+    attack: TONES.hold.attack,
+    release: Math.min(TONES.hold.maxRelease, seconds / 2),
+  }),
+  exhale: () => playTone(TONES.exhale.freq, TONES.exhale.duration, TONES.exhale.gain, TONES.exhale),
+  rest: playRestPulses,
+  chirp: () => playTone(TONES.chirp.freq, TONES.chirp.duration, TONES.chirp.gain, TONES.chirp),
+  noise: playNoise,
+  hum: playHum,
+};
+
+function playPhaseSound(phase, seconds, isResume) {
+  const sound = phase.sound ?? phase.phase;
+  if (isResume && !SUSTAINED_SOUNDS.includes(sound)) return;
+  const play = SOUND_PLAYERS[sound];
+  if (play && seconds > 0) play(seconds);
+}
+
+// Muting suspends the whole context so nothing runs in the background, not just silences it
+function toggleSound() {
+  state.isMuted = !state.isMuted;
+  if (state.isMuted) {
+    stopActiveNodes();
+    if (state.audioCtx) state.audioCtx.suspend();
+  } else if (state.audioCtx) {
+    state.audioCtx.resume();
+  }
+  updateSoundButton();
+}
+
+function setVolume(percent) {
+  state.volume = clamp(percent / PERCENT, 0, 1);
+  if (!state.audioCtx) return;
+  const ctx = state.audioCtx;
+  ctx.masterGain.gain.setTargetAtTime(state.volume, ctx.currentTime, VOLUME_SMOOTHING_S);
+}
+
+/* ── Mood light ────────────────────────────────────── */
+
+function createMoodOption(mood) {
+  const option = el('button', 'mood-option');
+  option.type = 'button';
+  option.dataset.mood = mood.id;
+  option.setAttribute('aria-pressed', String(mood.id === state.mood));
+  const swatch = el('span', 'mood-swatch');
+  swatch.dataset.swatch = mood.id;
+  const text = el('span');
+  text.append(el('span', 'mood-name', mood.name), el('span', 'mood-desc', mood.description));
+  option.append(swatch, text);
+  return option;
+}
+
+function renderMoods() {
+  dom.moodOptions.replaceChildren(...MOODS.map(createMoodOption));
+}
+
+// Moods only swap CSS tokens on <html>; the choice lasts for this visit, by design
+function setMood(id) {
+  state.mood = id;
+  document.documentElement.dataset.mood = id;
+  dom.moodOptions.querySelectorAll('.mood-option').forEach((option) => {
+    option.setAttribute('aria-pressed', String(option.dataset.mood === id));
+  });
+}
+
+function openMoodPanel(button) {
+  state.moodOpener = button;
+  dom.moodPanel.hidden = false;
+  dom.moodToggles.forEach((toggle) => toggle.setAttribute('aria-expanded', 'true'));
+  dom.moodOptions.querySelector('[aria-pressed="true"]').focus();
+}
+
+function closeMoodPanel() {
+  if (dom.moodPanel.hidden) return;
+  dom.moodPanel.hidden = true;
+  dom.moodToggles.forEach((toggle) => toggle.setAttribute('aria-expanded', 'false'));
+  if (state.moodOpener) state.moodOpener.focus();
+  state.moodOpener = null;
+}
+
+function toggleMoodPanel(button) {
+  if (dom.moodPanel.hidden) openMoodPanel(button);
+  else closeMoodPanel();
+}
+
+function handleOutsideClick(event) {
+  if (dom.moodPanel.hidden) return;
+  if (dom.moodPanel.contains(event.target) || event.target.closest('[data-mood-toggle]')) return;
+  closeMoodPanel();
+}
+
+/* ── Advertising ───────────────────────────────────── */
+
+function buildEthicalAdsUnit() {
+  const unit = el('div', 'ad-unit');
+  unit.dataset.eaPublisher = AD_CONFIG.ethicalads.publisher;
+  unit.dataset.eaType = AD_CONFIG.ethicalads.type;
+  return unit;
+}
+
+function buildAdSenseUnit() {
+  const unit = el('ins', 'adsbygoogle ad-unit');
+  unit.dataset.adClient = AD_CONFIG.adsense.client;
+  unit.dataset.adSlot = AD_CONFIG.adsense.slot;
+  unit.dataset.adFormat = 'auto';
+  unit.dataset.fullWidthResponsive = 'true';
+  return unit;
+}
+
+// The privacy statement must describe advertising whenever it is switched on
+function syncAdNotices() {
+  dom.adNotices.forEach((node) => {
+    node.hidden = (node.dataset.ads === 'on') !== AD_CONFIG.enabled;
+  });
+}
+
+function initAds() {
+  syncAdNotices();
+  const provider = AD_PROVIDERS[AD_CONFIG.provider];
+  if (!AD_CONFIG.enabled || !provider) return;
+  dom.adSlot.append(provider.unit());
+  dom.adSlot.hidden = false;
+  const script = document.createElement('script');
+  script.async = true;
+  script.crossOrigin = 'anonymous';
+  script.src = provider.script();
+  document.head.append(script);
+  if (AD_CONFIG.provider === 'adsense') (window.adsbygoogle = window.adsbygoogle || []).push({});
+}
+
+/* ── Events ────────────────────────────────────────── */
+
+function handleKeydown(event) {
+  if (event.key === 'Escape' && !dom.moodPanel.hidden) {
+    closeMoodPanel();
+    return;
+  }
+  if (event.key === 'Escape' && legalIsOpen()) {
+    closeLegal();
+    return;
+  }
+  if (event.key === 'Escape' && !dom.safetyModal.hidden) {
+    closeSafety();
+    return;
+  }
+  const practicing = byId('view-practice').classList.contains('active') && dom.completion.hidden;
+  const onControl = ['BUTTON', 'INPUT'].includes(event.target.tagName);
+  if (practicing && event.key === ' ' && !onControl) {
+    event.preventDefault();
+    togglePause();
+  }
+}
+
+function wireLibraryEvents() {
+  dom.cardGrid.addEventListener('click', (event) => {
+    const button = event.target.closest('[data-exercise]');
+    if (button) openDetail(button.dataset.exercise);
+  });
+  dom.backToList.addEventListener('click', showLibrary);
+  dom.pills.forEach((pill) => pill.addEventListener('click', () => selectPill(pill)));
+  dom.startBtn.addEventListener('click', handleBegin);
+  dom.safetyConfirm.addEventListener('click', startPractice);
+  dom.safetyCancel.addEventListener('click', closeSafety);
+  dom.moodToggles.forEach((button) => button.addEventListener('click', () => toggleMoodPanel(button)));
+  dom.moodOptions.addEventListener('click', (event) => {
+    const option = event.target.closest('[data-mood]');
+    if (option) setMood(option.dataset.mood);
+  });
+  document.addEventListener('click', handleOutsideClick);
+  dom.legalLinks.forEach((button) => button.addEventListener('click', () => openLegal(button)));
+  dom.legalClose.forEach((button) => button.addEventListener('click', closeLegal));
+  window.addEventListener('hashchange', openFromHash);
+}
+
+function wirePracticeEvents() {
+  dom.stopBtn.addEventListener('click', endPractice);
+  dom.pauseBtn.addEventListener('click', togglePause);
+  dom.soundBtn.addEventListener('click', toggleSound);
+  dom.volume.addEventListener('input', () => setVolume(Number(dom.volume.value)));
+  dom.practiceAgain.addEventListener('click', startPractice);
+  dom.toLibrary.addEventListener('click', showLibrary);
+  document.addEventListener('keydown', handleKeydown);
+}
+
+renderCards();
+renderMoods();
+setMood(state.mood);
+dom.copyrightYear.textContent = String(new Date().getFullYear());
+wireLibraryEvents();
+wirePracticeEvents();
+initAds();
+openFromHash();
+</script>
+</body>
+</html>

@@ -25,8 +25,11 @@ absent "no var declarations" '(^|[^-.a-zA-Z_])var [a-zA-Z_]'
 absent "no !important" '!important'
 css_after_tokens=$(awk '/\[data-tech="sage"\]/{on=1} /<\/style>/{on=0} on' index.html)
 if grep -qE '#[0-9a-fA-F]{3,8}\b' <<<"$css_after_tokens"; then fail "hex colours outside the token blocks"; else pass "colours only in tokens"; fi
-script=$(awk '/^<script>$/{on=1; next} /^<\/script>$/{on=0} on' index.html)
-if node --check <(printf '%s' "$script") 2>/dev/null; then pass "JavaScript parses"; else fail "JavaScript syntax error"; fi
+# A real .js file, not a <(…) pipe: Node 20 on Linux cannot --check a /dev/fd path
+script_file=$(mktemp "${TMPDIR:-/tmp}/nisvasa-app-XXXXXX.js")
+awk '/^<script>$/{on=1; next} /^<\/script>$/{on=0} on' index.html > "$script_file"
+if node --check "$script_file" 2>/dev/null; then pass "JavaScript parses"; else fail "JavaScript syntax error"; fi
+rm -f "$script_file"
 
 echo "── Completeness ──────────────────────────────────"
 for name in "Box Breathing" "4-7-8" "Nadi Shodhana" "Bhramari" "Wim Hof" "Coherent" "Kapalabhati" "Physiological Sigh"; do

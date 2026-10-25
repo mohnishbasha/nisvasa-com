@@ -154,7 +154,8 @@ company site is the reference).
 
 Make the site easy for search engines, AI assistants and agents to read and recommend.
 
-- Domain: https://nisvasa.com/ (canonical). GitHub Pages needs the custom domain configured.
+- Domain: https://nisvasa.com/ (canonical, bare domain; www redirects to it). The Pages custom
+  domain setting and the CNAME file both say `nisvasa.com`. The default branch is `main`.
 - index.html <head>: an accurate meta description; `<link rel="canonical">`;
   `<link rel="alternate" type="text/plain">` to llms.txt and llms-full.txt;
   `<link rel="sitemap">`; Open Graph and Twitter card tags; JSON-LD `WebApplication`
@@ -285,7 +286,8 @@ During an exercise, the instruction for this moment must be the easiest thing to
 - Triggers: push to any branch, pull_request, workflow_dispatch. permissions: contents: read.
   concurrency: `ci-${{ github.ref }}` with cancel-in-progress.
 - Jobs (each on ubuntu-latest):
-  - validate: Node 20, `bash .agent/skills/validate/run.sh`.
+  - validate: Node 22, `bash .agent/skills/validate/run.sh`. CI uses checkout@v5,
+    setup-node@v5 and setup-java@v5 (deploy.yml keeps the v4 pins from the original spec).
   - html: Java 21 (temurin), download the W3C Nu HTML Checker (vnu.jar) and run it with
     `--errors-only` (errors fail the build); a second step prints warnings for information.
   - smoke: `bash tests/smoke.sh` with CHROME=google-chrome.
@@ -313,6 +315,8 @@ Smoke test (`tests/smoke.sh` + `tests/smoke-harness.js`):
 
 - `.gitignore`: CLAUDE.local.md; .DS_Store, Thumbs.db, desktop.ini, .idea/, .vscode/, *.swp,
   *~; node_modules/, vnu.jar, actionlint; *.log, tmp/, .env, .env.*.
+- Shell checks give Node a real temp `.js` file, never a `<(…)` pipe: Node 20 on Linux cannot
+  `--check` a /dev/fd path (this broke the first CI run).
 - SVG elements have no `.hidden` property. Icon swaps toggle an `is-hidden` class
   (`.control .is-hidden { display: none; }`); the HTML `hidden` attribute is used only on
   HTML elements.

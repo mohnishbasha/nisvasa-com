@@ -6,7 +6,7 @@ audio design and feature scope. When modifying the app, consult this file to und
 why decisions were made, not just what was built.
 
 Read it in this order:
-1. **v1.1–v1.2 amendments** below: the current requirements. They supersede the original
+1. **v1.1–v1.3 amendments** below: the current requirements. They supersede the original
    prompt wherever the two conflict.
 2. **Original full prompt (v1.0)** at the bottom: kept word for word for history and for
    everything v1.1 does not change (exercises, patterns, audio, timer, accessibility, git
@@ -23,14 +23,14 @@ buttons), and visitors choose the "room" they breathe in with the mood light.
 - No canvas (CSS animation only)
 - No localStorage, sessionStorage or cookies (mood and theme choices last for one visit)
 - No frameworks, no build step, no package.json
-- No PWA manifest
+- No PWA manifest (icons are linked directly; there is no site.webmanifest)
 - No network requests, except the opt-in advertising loader, which is off by default
 
 ## If you are adding a new breathing exercise
 Follow the existing exercise config object structure in index.html. Each exercise needs:
 id, name, sanskrit, category, color, teaser, benefits (array of 3), pattern (array of
 phase objects) and completion. Add it to the EXERCISES array; the UI renders it
-automatically. Then run the sync-llms skill and update llms.txt, the README table and the
+automatically. Then run the sync-content skill and update llms.txt, the README table and the
 JSON-LD featureList. `bash .agent/skills/add-exercise/run.sh` prints the full checklist.
 
 ## If you are changing the visual theme
@@ -53,10 +53,15 @@ index.html. Change them there. Never hardcode colours anywhere else.
 | v1.2    | 2026-10-25 | Practice screen: exercise name, phase label and hint made far more prominent |
 | v1.2    | 2026-10-25 | Code sanity CI (ci.yml): validator, W3C HTML check, headless-Chrome smoke test, shellcheck, actionlint |
 | v1.2    | 2026-10-25 | Expanded .gitignore; fixed SVG icon toggles (pause/play, sound/muted never swapped) |
+| v1.3    | 2026-10-27 | Favicon set, app icons, logo (inline, mood-aware) and 1200×630 social image |
+| v1.3    | 2026-10-27 | Audio: every phase's sound lasts exactly as long as the phase |
+| v1.3    | 2026-10-27 | SEO/AEO: pre-rendered cards, visible FAQ, generated JSON-LD @graph, richer <head>, image sitemap |
+| v1.3    | 2026-10-27 | Responsive: circle sized as a ratio of a width-and-height cap; short-screen and landscape layout |
+| v1.3    | 2026-10-27 | Skills: sync-llms → sync-content; new brand-assets; smoke test grows to 51 checks |
 
 ---
 
-## v1.1–v1.2 amendments (supersede the original prompt where they conflict)
+## v1.1–v1.3 amendments (supersede the original prompt where they conflict)
 
 ### A1. Visual design: serverlessvc.com design language
 
@@ -168,7 +173,7 @@ Make the site easy for search engines, AI assistants and agents to read and reco
 - llms.txt (llmstxt.org format, curated by hand): summary blockquote, reliable facts (cost,
   platform, data, session lengths, mood light, safety), every exercise with its deep link and
   pattern, how-to steps, legal pointers, links to llms-full.txt, README and AGENTS.md.
-- llms-full.txt: generated, never hand-edited. `bash .agent/skills/sync-llms/run.sh` reads
+- llms-full.txt: generated, never hand-edited. `bash .agent/skills/sync-content/run.sh` (v1.3; was sync-llms) reads
   EXERCISES and MOODS out of index.html and writes every exercise's link, category, pattern,
   teaser, benefits and completion message, plus usage, moods, safety and a privacy/terms summary.
 - robots.txt: allow all agents, point to the sitemap, and declare content signals
@@ -208,7 +213,7 @@ Make the site easy for search engines, AI assistants and agents to read and reco
   - validate: the full checklist (below); reports every failure, exits non-zero; runs
     deploy-check and audit-deps; confirms llms-full.txt is in sync
   - add-exercise: prints the exercise template and follow-up checklist
-  - sync-llms: regenerates llms-full.txt (`--stdout` mode for comparisons)
+  - sync-llms: regenerates llms-full.txt (renamed and extended to sync-content in v1.3, see A17)
   - deploy-check: verifies deploy.yml triggers, permissions, concurrency and action versions
   - audit-deps: URL allowlist; flags script src, stylesheets, fonts, network APIs, storage
     and package.json
@@ -251,6 +256,16 @@ PRACTICE AND CODE SANITY (v1.2)
 - [ ] shellcheck and actionlint report nothing
 - [ ] .gitignore covers personal notes, OS/editor files, local tooling, logs and env files
 
+BRAND, SOUND, SEO AND RESPONSIVE (v1.3)
+- [ ] favicon.svg/.ico, icon-192/512, apple-touch-icon (180, opaque), logo.svg, og-image.jpg exist and are linked
+- [ ] Masthead shows the inline logo in the current mood's --brand colour
+- [ ] soundPlan(): every phase of every exercise has tones from 0 s to exactly its duration
+- [ ] Pre-rendered cards and JSON-LD are in sync (sync-content --check)
+- [ ] Visible FAQ with at least five answer-first questions; FAQPage JSON-LD generated from it
+- [ ] Title, description, canonical, robots, Open Graph and Twitter image tags present
+- [ ] No horizontal scroll and practice controls in view at 320×568, 375×667, 414×896, 768×1024, 667×375
+- [ ] The breath circle keeps the 160:280 proportion at every size, including landscape
+
 ### A9. Final file list (replaces the original FINAL OUTPUT list)
 
   1. index.html                       complete app
@@ -258,12 +273,15 @@ PRACTICE AND CODE SANITY (v1.2)
   3. .github/workflows/deploy.yml     GitHub Actions workflow (unchanged from v1.0)
   4. PROMPT.md                        this file
   5. CLAUDE.md / AGENTS.md / SKILLS.md / SOUL.md
-  6. .agent/skills/{validate,add-exercise,sync-llms,deploy-check,audit-deps}/{SKILL.md,run.sh}
-     (+ sync-llms/generate.js)
+  6. .agent/skills/{validate,add-exercise,sync-content,brand-assets,deploy-check,audit-deps}/
+     {SKILL.md,run.sh} (+ sync-content/generate.js, brand-assets/og-image.html)
   7. llms.txt, llms-full.txt, robots.txt, sitemap.xml, ads.txt, .well-known/security.txt
   8. .gitignore
   9. .github/workflows/ci.yml          code sanity checks (v1.2)
- 10. tests/smoke.sh, tests/smoke-harness.js   headless-Chrome smoke test (v1.2)
+ 10. tests/smoke.sh, tests/smoke-harness.js   headless-Chrome smoke test (v1.2, extended v1.3)
+ 11. favicon.svg, favicon.ico, icon-192.png, icon-512.png, apple-touch-icon.png, logo.svg,
+     og-image.jpg                       brand assets (v1.3)
+ 12. CNAME                             nisvasa.com
 
 ### A10. Practice-screen prominence (v1.2)
 
@@ -322,6 +340,116 @@ Smoke test (`tests/smoke.sh` + `tests/smoke-harness.js`):
   HTML elements.
 - The W3C checker must report zero errors. "Section lacks heading" warnings are acceptable
   for dialogs and views; give real content sections a heading (an sr-only one is fine).
+
+### A13. Brand: favicon, icons and logo (v1.3)
+
+- The mark: a 64×64 rounded tile (radius 16) with a 135° gradient #16A34A → #0E8A94, an outer
+  white ring (r 21, 35% opacity), an inner white ring (r 13.5, 75%) and a white core (r 5.5),
+  i.e. the breath circle and its rings. `favicon.svg` is the master; `logo.svg` adds the
+  "nisvasa" wordmark (weight 300).
+- Rasters (all generated by the brand-assets skill from favicon.svg with Chrome + ImageMagick):
+  favicon.ico (16/32/48), icon-192.png, icon-512.png (also the JSON-LD image),
+  apple-touch-icon.png (180×180, opaque green background because iOS rounds its own corners)
+  and og-image.jpg (1200×630 share card from .agent/skills/brand-assets/og-image.html: mark,
+  "Free guided breathing, right in your browser.", one-line promise, the eight exercise names).
+- <head> links: favicon.svg (image/svg+xml), favicon.ico, icon-192.png, apple-touch-icon.png.
+- In the app: the mark is inline SVG at the top of the masthead (56px, soft shadow), drawn with
+  `--brand` and `--on-brand`, so it re-tints with the mood. It is decorative (aria-hidden).
+- Still no web app manifest (see "What was intentionally excluded").
+
+### A14. Sound that lasts as long as the breath (v1.3, supersedes the tone lengths in AUDIO)
+
+The original spec gave fixed lengths (inhale 400 ms, exhale ~600 ms release, 40 ms chirp). Now
+every phase's sound starts when the phase starts and ends exactly when it ends.
+
+- `soundPlan(phase, seconds)` returns pure data: a list of tones `{ freq, gain, start, duration,
+  attack, release, sweepTo? }` and optional noise bursts. `playPlan()` schedules it. Keeping it
+  pure lets tests check every phase without playing audio.
+- Envelope shapes (ENVELOPE_LIMITS):
+  - swell, for inhale: attack 70% of the phase, release min(0.35 s, 30%), so the level rises
+    with the breath
+  - steady, for hold, Bhramari hum and the rest bed: attack min(0.2 s, 25%), release
+    min(0.6 s, 33%)
+  - fade, for exhale: attack min(0.08 s, 25%), then a decay across the rest of the phase
+  - pluck, for the Kapalabhati pump: 5 ms attack, decay across the 0.5 s pump
+- Frequencies and peak gains keep the original values: inhale 432 Hz 0.18, hold 324 Hz 0.10,
+  exhale 360 Hz 0.15, rest 216 Hz, hum 220/440/660 Hz (0.6/0.3/0.1 of 0.08), pump 880 Hz → 660 Hz
+  0.12, completion chime 396 → 528 → 660 Hz unchanged.
+- Rest phases: a soft 216 Hz bed (gain 0.035) for the whole phase, plus the original pulses
+  (gain 0.06, every 2.5 s, 0.6 s long).
+- Wim Hof breaths: inhale = 25 ms noise burst (gain 0.08) plus an inhale swell over the full
+  1.5 s; exhale = an exhale fade over the full 1.5 s.
+- Kapalabhati: the passive half-beat inhale gets a very soft swell (432 Hz, gain 0.05); the sharp
+  exhale gets the pluck.
+- Pause stops every node; resume replays the plan for the remaining seconds (noise bursts
+  are not replayed).
+- Test: for every exercise and every phase of its first cycle, tones start at 0, the latest
+  tone ends at the phase duration (±1 ms), and attack + release ≤ duration.
+
+### A15. SEO and answer-engine optimisation (v1.3, extends A4)
+
+- Crawlers that don't execute JavaScript (most AI crawlers) must see the content. The eight
+  exercise cards are pre-rendered into index.html between `<!-- generated:cards:start/end -->`
+  markers from EXERCISES; renderCards() replaces them with identical DOM at runtime. Card
+  titles are h3, under an sr-only h2 "Breathing exercises".
+- A `<noscript>` note says the timer needs JavaScript and links llms-full.txt.
+- Visible FAQ (`#faq`, "Questions") after the cards: native <details class="faq-item"> with
+  <summary> question and one <p> answer, answer-first, hedged, with no medical claims beyond the
+  cited benefits. Eight questions: anxiety, sleep, box breathing how-to, coherent breathing,
+  how long to practise, Wim Hof safety, free/private, phones and direct links.
+- JSON-LD is one generated `@graph` between `<!-- generated:jsonld -->` markers: Organization
+  (Serverless Ventures LLC), WebSite, WebApplication (description, HealthApplication, free Offer,
+  image og-image.jpg, featureList of all patterns, browserRequirements), ItemList of the eight
+  exercises with their #id URLs, and FAQPage generated from the visible FAQ. It is never
+  hand-edited.
+- <head>: title "nisvasa — Free Guided Breathing Exercises: Box, 4-7-8, Wim Hof"; a ~155-character
+  description; robots `index, follow, max-image-preview:large, max-snippet:-1`; author;
+  application-name; theme-color (JS updates it to the mood's first gradient stop); canonical;
+  hreflang en and x-default; llms and sitemap alternates; Open Graph (type, site_name, locale,
+  title, description, url, image 1200×630 with alt) and Twitter summary_large_image.
+- Opening an exercise sets `document.title` to "<Name> (<Sanskrit>) — nisvasa"; returning to
+  the library restores it.
+- Masthead subtitle is descriptive: "Free guided breathing exercises for calm, sleep, focus and
+  energy" (the h1 stays "breathe").
+- llms.txt gains a "Common questions" block mapping needs (anxiety, sleep, focus, energy, how
+  long) to exercise links; llms-full.txt includes the full FAQ and notes the sound timing.
+- sitemap.xml uses the image extension for og-image.jpg and icon-512.png; lastmod is updated
+  with content changes.
+- Hash routes (#box…) are not separate URLs to search engines. Per-exercise static pages
+  would need multiple HTML files and are out of scope while the app stays single-file.
+
+### A16. Responsive layout (v1.3)
+
+- The breath circle is sized as a ratio: JS sets `--circle-size` to size/CIRCLE_MAX_SIZE
+  (0.5714 at rest, 1 at full inhale), and CSS renders
+  `--circle-render: calc(var(--circle-cap) * var(--circle-size))`. The 160:280 proportion holds
+  everywhere, and a cap below 160 px can no longer freeze the animation. freezeCircle() converts
+  the live width back into a ratio (stage = cap × STAGE_TO_CIRCLE 1.16).
+- `--circle-cap`: `min(260px, 78vw, 38svh)` on phones, `min(300px, 40svh)` from 601 px, so the
+  circle shrinks on short screens instead of pushing the controls off-screen.
+- Controls: 8px gaps; volume slider `clamp(64px, 22vw, 112px)`. On 320 px the slider may wrap
+  to its own line but stays in view.
+- `@media (max-height: 700px)`: practice gap 14px, name pill 13px, phase label 32px, hint 16px.
+  `@media (max-height: 460px)` (landscape phones): gap 8px, name pill hidden, phase label 26px,
+  hint 14px.
+- Tested sizes (smoke test, iframes over local HTTP): 320×568, 375×667, 414×896, 768×1024 and
+  667×375. At each, the home page has no horizontal scroll and, in practice, the stop, sound and
+  volume controls end within the viewport.
+
+### A17. Skills and tests (v1.3)
+
+- `sync-llms` is renamed `sync-content` and now regenerates the pre-rendered cards, the JSON-LD
+  graph and llms-full.txt. `--check` exits 1 if anything is stale; validate runs it. Output is
+  idempotent: two runs produce identical files.
+- New `brand-assets` skill regenerates all raster icons and the share image (see A13).
+- The validator also requires the brand files, CNAME, the FAQ, the pre-rendered cards, the icon
+  links, og:image and soundPlan.
+- CI lint checks the JSON-LD graph (WebApplication with 8 features, ItemList of 8, FAQPage with
+  at least 5 questions) and the icon PNG dimensions.
+- tests/smoke.sh now serves the page over local HTTP (python3 -m http.server on a free port,
+  stopped on exit) and runs 51 checks, adding: page title per exercise, theme colour per mood,
+  sound spans for every phase, circle proportions, JSON-LD/FAQ/icon wiring, and the five device
+  sizes. A deliberately shortened inhale tone fails exactly the sound check.
 
 ---
 

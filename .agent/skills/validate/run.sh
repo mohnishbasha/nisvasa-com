@@ -57,17 +57,23 @@ check "aria-live phase announcer" 'id="phase-announcer" aria-live="polite"'
 check "prefers-reduced-motion" 'prefers-reduced-motion'
 check "600px breakpoint" '601px'
 check "structured data (JSON-LD)" 'application/ld+json'
+check "FAQ section" 'class="faq-item"'
+check "pre-rendered exercise cards" 'data-exercise="physiological-sigh"'
+check "favicon and touch icon linked" 'rel="apple-touch-icon"'
+check "social image" 'og:image'
+check "sound spans each phase (soundPlan)" 'function soundPlan'
 if grep -q 'enabled: false,' index.html; then pass "ads off by default"; else info "ads are ENABLED — confirm the privacy statement, ads.txt and consent are in place"; fi
 
 echo "── Site and deploy ───────────────────────────────"
-for f in README.md llms.txt llms-full.txt robots.txt sitemap.xml ads.txt .well-known/security.txt .gitignore \
+for f in README.md llms.txt llms-full.txt robots.txt sitemap.xml ads.txt .well-known/security.txt .gitignore CNAME \
+         favicon.svg favicon.ico icon-192.png icon-512.png apple-touch-icon.png logo.svg og-image.jpg \
          .github/workflows/deploy.yml .github/workflows/ci.yml tests/smoke.sh tests/smoke-harness.js; do
   if [ -f "$f" ]; then pass "$f"; else fail "$f missing"; fi
 done
-if diff -q <(node .agent/skills/sync-llms/generate.js --stdout) llms-full.txt >/dev/null; then
-  pass "llms-full.txt in sync with index.html"
+if node .agent/skills/sync-content/generate.js --check >/dev/null; then
+  pass "generated content in sync (cards, JSON-LD, llms-full.txt)"
 else
-  fail "llms-full.txt is stale — run: bash .agent/skills/sync-llms/run.sh"
+  fail "generated content is stale — run: bash .agent/skills/sync-content/run.sh"
 fi
 bash .agent/skills/deploy-check/run.sh --quiet || fails=$((fails + 1))
 bash .agent/skills/audit-deps/run.sh --quiet || fails=$((fails + 1))

@@ -23,6 +23,10 @@ pill buttons. Six mood lights re-tint it.
 | Privacy / terms        | #legal-privacy / #legal-terms dialogs         |
 | Advertising (opt-in)   | const AD_CONFIG + initAds()                   |
 | Agent-readable content | llms.txt (curated), llms-full.txt (generated) |
+| SEO / AEO              | <head> meta, generated JSON-LD, visible #faq  |
+| Pre-rendered cards     | generated:cards region in #card-grid          |
+| Sound timing           | soundPlan() / SOUND_PLANS / ENVELOPE_LIMITS   |
+| Logo and icons         | favicon.svg, logo.svg, inline .logo-mark      |
 | GitHub Actions deploy  | .github/workflows/deploy.yml                  |
 | CI sanity checks       | .github/workflows/ci.yml                      |
 | Browser smoke test     | tests/smoke.sh + tests/smoke-harness.js       |
@@ -38,7 +42,7 @@ pill buttons. Six mood lights re-tint it.
 
 Adding a new exercise:
   bash .agent/skills/add-exercise/run.sh prints the template and checklist.
-  Then sync llms-full.txt, update llms.txt, the README table and the JSON-LD featureList.
+  Then run the sync-content skill (cards, JSON-LD, llms-full.txt) and update llms.txt and the README table.
 
 Adding or changing a mood:
   Add it to MOODS, add a :root[data-mood="<id>"] block (dark moods also join the shared
@@ -48,7 +52,16 @@ Changing a colour:
   Edit the CSS custom property in the token blocks only. Never hardcode a colour elsewhere.
 
 Changing audio:
-  Edit TONES, playTone() or the SOUND_PLAYERS map. Web Audio API only, never <audio> tags.
+  Edit TONES, ENVELOPE_LIMITS or SOUND_PLANS. Web Audio API only, never <audio> tags.
+  A phase's sound must last exactly as long as the phase; tests/smoke.sh checks every phase.
+
+Editing the FAQ (AEO):
+  Edit the <details class="faq-item"> blocks in #faq: question in <summary>, one-paragraph answer
+  in <p>, direct answer in the first sentence. Then run the sync-content skill.
+
+Changing the logo:
+  Edit favicon.svg (and logo.svg), then bash .agent/skills/brand-assets/run.sh.
+  The inline logo in the masthead uses --brand / --on-brand so it follows the mood.
 
 Turning on ads:
   Set AD_CONFIG.enabled = true, choose a provider and fill in its IDs, add the network's line
@@ -57,7 +70,7 @@ Turning on ads:
 
 Changing legal text:
   Edit the #legal-privacy / #legal-terms dialogs, update the effective date, and mirror the
-  summary in llms-full.txt (via the sync-llms skill's template).
+  summary in llms-full.txt (edit the template in .agent/skills/sync-content/generate.js).
 
 Deploying:
   git push origin main (via a merged PR). Check the Actions tab for status.

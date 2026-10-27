@@ -33,8 +33,13 @@ The privacy statement must always describe what the page really does. Breathing 
 is wellness, not medicine, and the copy never claims otherwise.
 
 Open to agents.
-llms.txt, llms-full.txt, structured data and direct exercise links exist so assistants can
-describe and recommend the app accurately. Keep them true to the app.
+llms.txt, llms-full.txt, the visible FAQ, pre-rendered cards, structured data and direct
+exercise links exist so search engines and assistants can describe and recommend the app
+accurately. Keep them true to the app; never write for a crawler what a person would not see.
+
+Sound that keeps time.
+Every tone lasts exactly as long as the breath it guides. If the circle says four seconds,
+the ear should hear four seconds.
 
 ## Hard constraints
 NEVER add external dependencies beyond the documented opt-in ad loader

@@ -1,7 +1,7 @@
 # nisvasa — Skills Registry
 
 Skills live in .agent/skills/. Each is a directory with a SKILL.md and an executable run.sh.
-Agents load them on demand. They need only bash and Node (no packages).
+Agents load them on demand. They need only bash and Node (no packages); brand-assets also needs Chrome and ImageMagick.
 
 ## Available skills
 
@@ -9,7 +9,8 @@ Agents load them on demand. They need only bash and Node (no packages).
 |--------------|-----------------------------|-----------------------------------------------------|
 | validate     | .agent/skills/validate/     | Check index.html and site files against the checklist |
 | add-exercise | .agent/skills/add-exercise/ | Add a new breathing exercise correctly              |
-| sync-llms    | .agent/skills/sync-llms/    | Regenerate llms-full.txt from index.html            |
+| sync-content | .agent/skills/sync-content/ | Regenerate cards, JSON-LD and llms-full.txt from index.html |
+| brand-assets | .agent/skills/brand-assets/ | Regenerate favicon, app icons and share image       |
 | deploy-check | .agent/skills/deploy-check/ | Verify the GitHub Pages workflow                    |
 | audit-deps   | .agent/skills/audit-deps/   | Confirm no dependency, network call or storage crept in |
 
@@ -19,7 +20,7 @@ Agents load them on demand. They need only bash and Node (no packages).
 
 ## Typical flow
 1. Make the change in index.html
-2. bash .agent/skills/sync-llms/run.sh     (if exercise, mood or legal text changed)
+2. bash .agent/skills/sync-content/run.sh  (if an exercise, mood, the FAQ or legal text changed)
 3. bash .agent/skills/validate/run.sh      (runs deploy-check and audit-deps too)
 4. bash tests/smoke.sh                     (headless Chrome click-through)
 5. Open index.html in a browser for anything visual or audible

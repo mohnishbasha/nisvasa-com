@@ -72,7 +72,7 @@ jobs:
           awk '/^<script>$/{on=1; next} /^<\/script>$/{on=0} on' index.html > "$RUNNER_TEMP/app.js"
           node --check "$RUNNER_TEMP/app.js"
           node --check tests/smoke-harness.js
-          node --check .agent/skills/sync-llms/generate.js
+          node --check .agent/skills/sync-content/generate.js
       - name: Machine-readable files parse
         run: |
           python3 -c "import xml.dom.minidom; xml.dom.minidom.parse('sitemap.xml')"
@@ -80,7 +80,22 @@ jobs:
           import json, re, pathlib
           html = pathlib.Path('index.html').read_text()
           block = re.search(r'<script type="application/ld\+json">(.*?)</script>', html, re.S).group(1)
-          data = json.loads(block)
-          assert data['@type'] == 'WebApplication' and len(data['featureList']) == 8
-          print('JSON-LD OK')
+          graph = {node['@type']: node for node in json.loads(block)['@graph']}
+          assert len(graph['WebApplication']['featureList']) == 8
+          assert graph['ItemList']['numberOfItems'] == 8
+          assert len(graph['FAQPage']['mainEntity']) >= 5
+          print('JSON-LD OK:', ', '.join(graph))
+          PY
+      - name: Images are the expected sizes
+        run: |
+          python3 - <<'PY'
+          import struct
+          def png_size(path):
+              with open(path, 'rb') as f:
+                  head = f.read(24)
+              return struct.unpack('>II', head[16:24])
+          expected = {'icon-512.png': (512, 512), 'icon-192.png': (192, 192), 'apple-touch-icon.png': (180, 180)}
+          for path, size in expected.items():
+              assert png_size(path) == size, (path, png_size(path))
+          print('icons OK')
           PY

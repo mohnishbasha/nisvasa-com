@@ -29,8 +29,8 @@ Add this object to the EXERCISES array in index.html:
   },
 
 Then:
-  1. bash .agent/skills/sync-llms/run.sh      # refresh llms-full.txt
-  2. Add the exercise and its link to llms.txt, the README table and the JSON-LD featureList
+  1. bash .agent/skills/sync-content/run.sh   # pre-rendered card, JSON-LD and llms-full.txt
+  2. Add the exercise and its link to llms.txt and the README table; consider an FAQ entry
   3. If the exercise has a new colour, add the token to EVERY mood block in :root (light and dark)
   4. bash .agent/skills/validate/run.sh
 TEMPLATE

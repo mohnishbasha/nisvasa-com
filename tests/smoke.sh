@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
-# Smoke-tests index.html in headless Chrome: loads the real page, clicks through every
-# exercise, the controls, moods, dialogs and a completed session, and checks deep links.
+# Smoke-tests index.html in headless Chrome: loads the real page over local HTTP, clicks through
+# every exercise, the controls, moods, dialogs and a completed session, checks that every phase's
+# sound spans the phase, the SEO wiring, deep links, and layout at five device sizes.
 # Needs only bash, Python 3 and Chrome/Chromium. Set CHROME to override the browser path.
 set -euo pipefail
 cd "$(dirname "$0")/.." || exit 1
@@ -18,7 +19,12 @@ find_chrome() {
 
 chrome=$(find_chrome)
 work=$(mktemp -d)
-trap 'rm -rf "$work"' EXIT
+server_pid=""
+cleanup() {
+  if [ -n "$server_pid" ]; then kill "$server_pid" 2>/dev/null; wait "$server_pid" 2>/dev/null || true; fi
+  rm -rf "$work"
+}
+trap cleanup EXIT
 
 # Catch errors from the very first script, then append the harness before </body>
 python3 - "$work" <<'PY'
@@ -33,11 +39,17 @@ deep = '<script>setTimeout(()=>{const p=document.createElement("pre");p.id="SMOK
 (work / 'deep.html').write_text(html.replace('</body>', deep + '</body>', 1))
 PY
 
-flags=(--headless=new --disable-gpu --no-first-run --no-default-browser-check --virtual-time-budget=60000)
+# HTTP, not file://, so the device-size iframes share an origin with the page
+port=$(python3 -c 'import socket; s=socket.socket(); s.bind(("127.0.0.1", 0)); print(s.getsockname()[1]); s.close()')
+python3 -m http.server "$port" --bind 127.0.0.1 --directory "$work" >/dev/null 2>&1 &
+server_pid=$!
+for _ in $(seq 1 50); do curl -s -o /dev/null "http://127.0.0.1:$port/smoke.html" && break; sleep 0.1; done
+
+flags=(--headless=new --disable-gpu --no-first-run --no-default-browser-check --virtual-time-budget=90000)
 [ -n "${CI:-}" ] && flags+=(--no-sandbox)
 
 run() {
-  "$chrome" "${flags[@]}" --dump-dom "file://$work/$1" 2>/dev/null \
+  "$chrome" "${flags[@]}" --dump-dom "http://127.0.0.1:$port/$1" 2>/dev/null \
     | python3 -c 'import sys,re,html; m=re.findall(r"<pre id=\"SMOKE\">(.*?)</pre>", sys.stdin.read(), re.S); print(html.unescape(m[-1]) if m else "FAIL harness produced no output")'
 }
 

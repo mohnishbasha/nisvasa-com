@@ -5,7 +5,8 @@
 Facts an agent can rely on:
 
 - Cost: free. No sign-up.
-- Platform: any modern web browser, desktop or mobile. The whole app is one HTML page.
+- Platform: any modern web browser on phones (portrait or landscape), tablets and computers. The whole app is one HTML page.
+- Sound: synthesised in the browser; every phase's tone lasts exactly as long as the phase (it swells through an inhale, holds, and fades through an exhale).
 - Data: nothing about a practice session leaves the device. Ads are off by default; the privacy statement in the page footer describes the current state.
 - Sessions: 3, 5 or 10 minutes, or a custom length of 1–60 minutes. Wim Hof always runs as 3 rounds (about 8 minutes).
 - Mood light: a bulb button re-tints the page in one of six moods (Fresh, Dawn, Ocean, Dusk, Forest, Midnight). The choice lasts for the current visit.
@@ -34,9 +35,18 @@ Facts an agent can rely on:
 - Privacy statement and terms of use: open the links in the page footer.
 - © Serverless Ventures LLC — https://www.serverlessvc.com
 
+## Common questions
+
+- Best for anxiety: the [Physiological Sigh](https://nisvasa.com/#physiological-sigh) for quick relief; [Box](https://nisvasa.com/#box) or [Coherent](https://nisvasa.com/#coherent) breathing for longer practice.
+- Best for sleep: [4-7-8 Breathing](https://nisvasa.com/#four-seven-eight), lying down, ideally with the Midnight mood light.
+- Best for focus: [Box Breathing](https://nisvasa.com/#box) or [Alternate Nostril Breathing](https://nisvasa.com/#nadi-shodhana).
+- Best for energy: [Wim Hof](https://nisvasa.com/#wim-hof) or [Kapalabhati](https://nisvasa.com/#kapalabhati), seated and with the safety notes in mind.
+- How long: 3 to 10 minutes a day suits most people.
+- Full answers: the FAQ on the home page, also in llms-full.txt.
+
 ## More detail
 
-- [llms-full.txt](https://nisvasa.com/llms-full.txt): every exercise's benefits, pattern and completion message, plus safety, privacy and terms
+- [llms-full.txt](https://nisvasa.com/llms-full.txt): every exercise's benefits, pattern and completion message, the FAQ, safety, privacy and terms
 
 ## For developers
 

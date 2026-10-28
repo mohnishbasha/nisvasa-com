@@ -1,6 +1,8 @@
+<p align="center"><img src="logo.svg" alt="nisvasa" width="260"></p>
+
 # nisvasa — breathe
 
-Guided breathing exercises. Calm, minimal, meditative.
+Free guided breathing exercises in your browser. Calm, minimal, meditative. It works on phones (portrait and landscape), tablets and desktops.
 
 **Live:** https://nisvasa.com/
 
@@ -25,6 +27,18 @@ Each exercise has a direct link, `https://nisvasa.com/#<id>`.
 
 All sound is synthesised in the browser with the Web Audio API. The app uses no audio files, no web fonts and no frameworks.
 
+## Sound
+
+Everything is synthesised in the browser with the Web Audio API, with no audio files. **Each phase's sound lasts exactly as long as the phase:**
+- the tone swells through an inhale;
+- holds steady through a hold;
+- fades away through an exhale;
+- rest phases get a soft bed tone with a pulse every 2.5 seconds;
+- each Kapalabhati pump is a half-second pluck;
+- Bhramari's hum fills the whole exhale.
+
+The smoke test checks this for every phase of every exercise.
+
 ## Mood light
 
 The bulb button (on the home screen and in the practice controls) re-tints the whole page. There are six moods: **Fresh** (default), **Dawn**, **Ocean**, **Dusk**, **Forest** and **Midnight**. The last two are low-light moods for evenings and sleep. The look follows the [serverlessvc.com](https://serverlessvc.com) design language. The choice isn't saved: no storage is used, so every visit starts on Fresh.
@@ -44,30 +58,45 @@ A reserved ad slot sits on the library screen only, never during practice. To tu
 3. Check the privacy statement: its advertising section appears automatically when ads are on.
 4. For AdSense, add a consent banner for EU/UK visitors before going live.
 
-## Agent readiness
+## SEO, AEO and agent readiness
 
-| File | Purpose |
+| Piece | Purpose |
 |---|---|
-| `llms.txt` | Curated summary for AI assistants (llmstxt.org format) |
-| `llms-full.txt` | Full content, generated from `index.html`. Don't edit by hand |
+| Pre-rendered cards | The exercise cards are in the HTML itself, so crawlers that don't run JavaScript (most AI crawlers) still see every exercise |
+| Visible FAQ | Eight answer-first questions (anxiety, sleep, box breathing, safety…) for search and answer engines |
+| JSON-LD `@graph` | Organization, WebSite, WebApplication, ItemList of exercises and FAQPage, generated from the page content |
+| `<head>` | Keyword title, description, canonical, robots, Open Graph and Twitter cards with `og-image.jpg`, theme colour (follows the mood) |
+| Per-exercise titles | Opening an exercise sets the tab title, for example "Box Breathing (Sama Vritti) — nisvasa" |
+| `llms.txt` | Curated summary for AI assistants (llmstxt.org format) with "best for…" answers |
+| `llms-full.txt` | Full content including the FAQ, generated from `index.html`. Don't edit by hand |
 | `robots.txt` | Allows all crawlers; content signals `search=yes, ai-input=yes, ai-train=no` |
-| `sitemap.xml` | Home page and the llms files |
+| `sitemap.xml` | Home page, llms files and images |
 | `.well-known/security.txt` | Security contact (RFC 9116) |
-| JSON-LD in `index.html` | `WebApplication` structured data with every exercise |
+
+## Brand
+
+| File | Use |
+|---|---|
+| `favicon.svg`, `favicon.ico` | Browser tab icon |
+| `apple-touch-icon.png` (180), `icon-192.png`, `icon-512.png` | Home-screen and app icons; `icon-512.png` is the structured-data image |
+| `logo.svg` | Mark and "nisvasa" wordmark, for docs and press |
+| `og-image.jpg` (1200×630) | Social share card |
+
+The masthead logo is inline SVG and takes on the current mood's colour. After editing `favicon.svg`, regenerate the rasters with `bash .agent/skills/brand-assets/run.sh` (needs Chrome and ImageMagick).
 
 For coding agents: `AGENTS.md` (rules), `CLAUDE.md` (Claude Code context), `SOUL.md` (values), `SKILLS.md` (skills in `.agent/skills/`) and `PROMPT.md` (full spec and requirement history).
 
 ```bash
 bash .agent/skills/validate/run.sh     # full checklist, exits non-zero on failure
-bash .agent/skills/sync-llms/run.sh    # regenerate llms-full.txt after content changes
+bash .agent/skills/sync-content/run.sh # regenerate cards, JSON-LD and llms-full.txt after content changes
 bash .agent/skills/add-exercise/run.sh # template and checklist for a new exercise
 ```
 
 ## Tests and CI
 
 ```bash
-bash .agent/skills/validate/run.sh   # project checklist, deploy shape, dependency audit, llms sync
-bash tests/smoke.sh                  # clicks through the real app in headless Chrome
+bash .agent/skills/validate/run.sh   # project checklist, deploy shape, dependency audit, generated-content sync
+bash tests/smoke.sh                  # real app in headless Chrome: 51 checks incl. sound timing and 5 device sizes
 ```
 
 The smoke test needs only bash, Python 3 and Chrome. Set `CHROME=/path/to/chrome` if it isn't found.
@@ -78,8 +107,8 @@ The smoke test needs only bash, Python 3 and Chrome. Set `CHROME=/path/to/chrome
 |---|---|
 | validate | The full project checklist (`.agent/skills/validate`) |
 | html | W3C Nu HTML Checker: errors fail the build, warnings are reported |
-| smoke | Headless Chrome click-through: every exercise, controls, moods, dialogs, deep links, a completed session |
-| lint | shellcheck, actionlint, JavaScript syntax, sitemap and JSON-LD parsing |
+| smoke | Headless Chrome click-through: every exercise, controls, moods, dialogs, deep links, a completed session, sound timing for every phase, SEO wiring, and no overflow with controls in view at 320×568, 375×667, 414×896, 768×1024 and 667×375 |
+| lint | shellcheck, actionlint, JavaScript syntax, sitemap and JSON-LD parsing, icon sizes |
 
 In **Settings → Branches**, protect `main` and require these four checks, so a failing build can't be merged and deployed.
 

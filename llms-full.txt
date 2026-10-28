@@ -1,14 +1,14 @@
 # nisvasa — full reference
 
-> Complete, agent-readable content of https://nisvasa.com/, generated from the exercise data in index.html. For the short version see https://nisvasa.com/llms.txt.
+> Complete, agent-readable content of https://nisvasa.com/, generated from the exercise data and FAQ in index.html. For the short version see https://nisvasa.com/llms.txt.
 
-nisvasa (Sanskrit niśvāsa, "breath") is a free guided-breathing web app by Serverless Ventures LLC (https://www.serverlessvc.com). It runs entirely in the browser: no install, no account, no cookies, no tracking. Sound is synthesised on the device with the Web Audio API.
+nisvasa (Sanskrit niśvāsa, "breath") is a free guided-breathing web app by Serverless Ventures LLC (https://www.serverlessvc.com). It runs entirely in the browser: no install, no account, no cookies, no tracking. Sound is synthesised on the device with the Web Audio API, and every phase's sound lasts exactly as long as the phase.
 
 ## Using the app
 
 1. Open https://nisvasa.com/ or a direct exercise link (https://nisvasa.com/#<exercise-id>).
 2. Read the benefits and the pattern, then choose a session length: 3, 5 or 10 minutes, or a custom 1–60 minutes. Wim Hof always runs as 3 rounds.
-3. Select "Begin practice". The circle grows on the inhale, holds, and shrinks on the exhale; the number inside counts down each phase (or counts breaths and pumps).
+3. Select "Begin practice". The circle grows on the inhale, holds, and shrinks on the exhale; the number inside counts down each phase (or counts breaths and pumps). The tone swells through each inhale, holds through each hold and fades through each exhale.
 4. Controls: stop, pause/resume (space bar also works), mute, volume and the mood light.
 5. Sessions end at the end of a full cycle, then show a completion message.
 
@@ -136,6 +136,40 @@ Benefits:
 - Even one cycle has a measurable calming effect.
 
 Completion message: "One breath. That was enough."
+
+## Frequently asked questions
+
+### Which breathing exercise is best for anxiety?
+
+For quick relief, try the physiological sigh: two inhales through the nose, then one long exhale. In a 2023 Stanford study, five minutes of daily cyclic sighing improved mood and lowered breathing rate more than mindfulness meditation. For a longer practice, box breathing and coherent breathing both steady the nervous system.
+
+### Which breathing exercise helps you fall asleep?
+
+4-7-8 breathing is the usual choice for sleep: inhale for 4 seconds, hold for 7, exhale for 8. The long exhale slows the heart rate. Try it lying down with the Midnight mood light for a few minutes before bed.
+
+### How do you do box breathing?
+
+Inhale for 4 seconds, hold for 4, exhale for 4, and hold again for 4. That is one square; repeat it for 3 to 5 minutes. Box breathing (Sama Vritti) is used by athletes and Navy SEALs to stay clear-headed under pressure.
+
+### What is coherent breathing?
+
+Coherent, or resonance, breathing means breathing at about five breaths a minute: inhale for 5.5 seconds and exhale for 5.5 seconds. This pace is associated with higher heart rate variability and a calmer mood.
+
+### How long should I practise breathing exercises?
+
+Three to ten minutes a day is enough for most people. A single physiological sigh can help in the moment; regular short sessions build the effect over time. nisvasa offers 3, 5 and 10 minute sessions or a custom length up to 60 minutes.
+
+### Is Wim Hof breathing safe?
+
+Wim Hof breathing is safe for most healthy adults when practised seated or lying down. Never do it in or near water, while driving or standing, and skip it if you are pregnant or have a heart, blood-pressure or seizure condition. Tingling and light-headedness are common; stop if you feel unwell.
+
+### Is nisvasa free and private?
+
+Yes. nisvasa is free, needs no account or app, and collects nothing: no cookies, analytics or tracking. Everything, including the sound, runs in your browser on your own device.
+
+### Does nisvasa work on my phone?
+
+Yes. It works in any modern browser on phones, tablets and computers. Each exercise also has its own link, such as nisvasa.com/#box, that you can save or share.
 
 ## Safety
 
